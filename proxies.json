@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json.schemastore.org/proxies",
+    "proxies": {
+        "nodedate": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/date"
+            },
+            "backendUri": "https://fast-everglades-node.azurewebsites.net/api/date",
+            "requestOverrides": {
+                "backend.request.method": "get"
+            }
+        }
+    }
+}
