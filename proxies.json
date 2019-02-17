@@ -1,15 +1,26 @@
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
+        "home": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/"
+            },
+            "backendUri": "https://localhost/api/home"
+        },
         "nodedate": {
             "matchCondition": {
                 "methods": [ "GET" ],
                 "route": "/api/date"
             },
-            "backendUri": "https://fast-everglades-node.azurewebsites.net/api/date",
-            "requestOverrides": {
-                "backend.request.method": "get"
-            }
+            "backendUri": "https://fast-everglades-node.azurewebsites.net/api/date"
+        },
+        "nodegraphql": {
+            "matchCondition": {
+                "methods": [ "GET", "POST" ],
+                "route": "/api/graphql"
+            },
+            "backendUri": "https://fast-everglades-node.azurewebsites.net/api/graphql"
         }
     }
 }
