@@ -1,7 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
-        "home": {
+        "root": {
             "matchCondition": {
                 "methods": [ "GET" ],
                 "route": "/"
