@@ -21,6 +21,7 @@ namespace fast_everglades
             ILogger log, ExecutionContext context)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("Rendering Home Page");
             
             var stream = new FileStream($"{context.FunctionAppDirectory}\\Views\\home.html", FileMode.Open);
 
@@ -28,7 +29,7 @@ namespace fast_everglades
             response.Content = new StreamContent(stream);
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
             
-            return response;
+            return await Task.FromResult(response);
         }
     }
 }
