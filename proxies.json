@@ -15,12 +15,26 @@
             },
             "backendUri": "https://fast-everglades-node.azurewebsites.net/api/date"
         },
+        "nodevideos": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/videos"
+            },
+            "backendUri": "https://fast-everglades-node.azurewebsites.net/api/videos"
+        },
         "nodegraphql": {
             "matchCondition": {
                 "methods": [ "GET", "POST" ],
                 "route": "/api/graphql"
             },
             "backendUri": "https://fast-everglades-node.azurewebsites.net/api/graphql"
+        },
+        "files": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "{*path}"
+            },
+            "backendUri": "https://localhost/api/staticFile?file={path}"
         }
     }
 }
