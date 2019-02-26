@@ -6,7 +6,7 @@
                 "methods": [ "GET" ],
                 "route": "/"
             },
-            "backendUri": "https://localhost/api/home"
+            "backendUri": "https://localhost/api/staticFile?file=Views/index.html"
         },
         "nodedate": {
             "matchCondition": {

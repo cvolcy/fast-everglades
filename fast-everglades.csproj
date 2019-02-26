@@ -5,6 +5,7 @@
     <RootNamespace>fast_everglades</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MediaTypeMap" Version="2.1.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.24" />
   </ItemGroup>
   <ItemGroup>
@@ -15,10 +16,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
-    <None Update="Views/home.html">
+    <None Update="proxies.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="proxies.json">
+    <None Update="www/Views/index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
