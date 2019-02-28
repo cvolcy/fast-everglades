@@ -29,6 +29,13 @@
             },
             "backendUri": "https://fast-everglades-node.azurewebsites.net/api/graphql"
         },
+        "pycowsay": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/cowsay"
+            },
+            "backendUri": "https://fast-everglades-py.azurewebsites.net/api/cowsay"
+        },
         "files": {
             "matchCondition": {
                 "methods": [ "GET" ],
