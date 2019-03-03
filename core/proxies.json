@@ -34,7 +34,7 @@
                 "methods": [ "GET" ],
                 "route": "/api/cowsay"
             },
-            "backendUri": "https://https://zeit-my-app.now.sh/cowsay.py"
+            "backendUri": "https://zeit-my-app.now.sh/cowsay.py"
         },
         "files": {
             "matchCondition": {
