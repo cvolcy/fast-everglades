@@ -8,6 +8,13 @@
             },
             "backendUri": "https://localhost/api/staticFile?file=Views/index.html"
         },
+        "emotion-recognition": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/emotion-recognition"
+            },
+            "backendUri": "https://localhost/api/staticFile?file=Views/emotions.html"
+        },
         "nodedate": {
             "matchCondition": {
                 "methods": [ "GET" ],
