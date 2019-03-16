@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fast Everglades | Facial Expression Recognition</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Emotions/site.css">
+</head>
+
+<body>
+    <div id="navigation">
+
+        <!-- Sidebar/menu -->
+        <nav class="w3-sidebar w3-gray w3-collapse w3-top w3-large w3-padding"
+            style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+            <a href="javascript:void(0)" @click="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+                style="width:100%;font-size:22px">Close
+                Menu</a>
+            <div class="w3-container">
+                <h3 class="w3-padding-64"><b>Fast<br>Everglades</b></h3>
+            </div>
+            <div class="w3-bar-block">
+                <a href="#" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+                <a href="#Overview" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Overview</a>
+                <a href="#Inference" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Inference</a>
+                <a href="#Architecture" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-white">Architecture</a>
+                <a href="#Postprocessing" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-white">Postprocessing</a>
+            </div>
+        </nav>
+
+        <!-- Top menu on small screens -->
+        <header class="w3-container w3-top w3-hide-large w3-gray w3-xlarge w3-padding">
+            <a href="javascript:void(0)" class="w3-button w3-gray w3-margin-right" @click="w3_open()">☰</a>
+            <span>ONNX.js | Emotions</span>
+        </header>
+
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large" @click="w3_close()" style="cursor:pointer" title="close side menu"
+            id="myOverlay"></div>
+
+    </div>
+    <!-- !PAGE CONTENT! -->
+    <div id="app" class="w3-main">
+
+        <!-- Overview -->
+        <div class="w3-container" id="Overview" style="margin-top:80px">
+            <h1 class="w3-jumbo"><b>Facial Expression Recognition</b></h1>
+            <h1 class="w3-xxxlarge w3-text-gray"><b>Overview.</b></h1>
+            <hr class="w3-round">
+            <p>Real time emotion recognition using client side inference model. <br />The model is using an enhanced
+                version of FER emotion dataset called FER+.</p>
+            <p>The application is made using Vue.js to build the UI and ONNX.js to perform the inference.</p>
+        </div>
+
+        <!-- Header -->
+        <div class="w3-container" style="margin-top:75px" id="Inference">
+            <h1 class="w3-xxxlarge w3-text-gray"><b>Inference.</b></h1>
+            <hr class="w3-round">
+            <div class="w3-row" style="position: relative;">
+                <div v-if="isLoadingModel || isInitModel || isInferring" class="wait-spinner w3-row w3-gray">
+                    <p class="w3-center">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 4em"></i><br>
+                        <span v-if="isLoadingModel">The model is loading...</span>
+                        <span v-if="loadedPercent">{{loadedPercent}} %</span>
+                        <span v-if="isInitModel">Model initialization...</span>
+                    </p>
+                </div>
+                <div class="w3-col m8 l9">
+                    <div class="w3-row">
+                        <canvas id="image-canvas" style="display: none"></canvas>
+                        <canvas id="preview-canvas" width="300" height="300"></canvas>
+                    </div>
+                    <div class="w3-row">
+                        <p>
+                            <span v-if="prediction.label">{{ prediction.label }}</span>
+                            <span v-if="prediction.accuracy">{{(prediction.accuracy * 100).toFixed(2) }}%</span>
+                        </p>
+                        <input type="file" name="image-file" id="image-file" accept="image/*">
+                    </div>
+                </div>
+                <div class="w3-col m4 l3">
+                    <transition-group name="list-complete" tag="ul" class="w3-ul w3-border emotion-list">
+                        <li v-for="emotion in emotions" v-bind:key="emotion.id" class="emotion-item list-complete-item">
+                            <span class="emotion-icon">{{ emotion.icon }} </span>
+                            <span class="emotion-label">{{ emotion.label }} </span>
+                            <span v-if="emotion.score" class="emotion-score">{{ (emotion.score*100).toFixed(2) }}
+                                %</span>
+                        </li>
+                    </transition-group>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture -->
+        <div class="w3-container" id="Architecture" style="margin-top:75px">
+            <h1 class="w3-xxxlarge w3-text-gray"><b>Architecture.</b></h1>
+            <hr class="w3-round">
+            <div class="w3-row">
+                <div class="w3-col m12">
+                    <p>The model is a deep convolutional neural network for face emotion recognition.</p>
+                    <p>The core architecture of the model is from
+                        <a href="https://arxiv.org/abs/1608.01041" target="_blank">
+                            <em>"Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label
+                                Distribution"</em>
+                        </a>.
+                    </p>
+                    <div class="w3-display-container">
+                        <img src="/Emotions/dcnn-arch.png" alt="Network Architecture"
+                            style="max-width: 100%; margin-bottom: 20px;">
+                        <div class="w3-display-bottommiddle w3-container">Network Architecture</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Postprocessing -->
+        <div class="w3-container" id="Postprocessing" style="margin-top:75px">
+            <h1 class="w3-xxxlarge w3-text-gray"><b>Postprocessing.</b></h1>
+            <hr class="w3-round">
+            <div class="w3-row">
+                <div class="w3-col m12">
+                    <p>The output of the model is a tensor of shape <em>n</em>x1x8, where <em>n</em> is the number of input and 8 is the array for the score for the emotion classes (<em>Neutral, Happiness, Surprise, Sadness, Anger, Disgust, Fear, Contempt</em>).</p>
+                    <p>Then to get to confidence score, we pass the value to softmax function.</p>
+                    <p>To find the best class name, we use the argmax function and a label decoder.</p>
+                    <p>ex. : <br>
+<pre style='color:#000000;background:#ffffff;'><span style='color:#808030; '>>>></span> model<span style='color:#808030; '>.</span>predict<span style='color:#808030; '>([</span>data<span style='color:#808030; '>])</span> 
+    <span style='color:#808030; '>[[</span><span style='color:#808030; '>-</span><span style='color:#008000; '>0.2443</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>2.8588</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.343</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>1.7846</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>8.5468</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>1.7859</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>1.8001</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>3.0789</span><span style='color:#808030; '>]]</span> 
+<span style='color:#808030; '>>>></span> softmax<span style='color:#808030; '>(</span><span style='color:#808030; '>[</span><span style='color:#808030; '>-</span><span style='color:#008000; '>0.2443</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>2.8588</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.343</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>1.7846</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>8.5468</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>1.7859</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>1.8001</span><span style='color:#808030; '>,</span> <span style='color:#808030; '>-</span><span style='color:#008000; '>3.0789</span><span style='color:#808030; '>]</span><span style='color:#808030; '>)</span> 
+    <span style='color:#808030; '>[</span><span style='color:#008000; '>0.0002</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.0003</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.9983</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.0012</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span> <span style='color:#696969; '>// confidence for each class</span>
+<span style='color:#808030; '>>>></span> argmax<span style='color:#808030; '>(</span><span style='color:#808030; '>[</span><span style='color:#008000; '>0.0002</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.0003</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.9983</span><span style='color:#808030; '>,</span> <span style='color:#008000; '>0.0012</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span><span style='color:#808030; '>)</span> 
+    <span style='color:#008c00; '>4</span>
+<span style='color:#808030; '>>>></span> labelDecode<span style='color:#808030; '>(</span><span style='color:#008c00; '>4</span><span style='color:#808030; '>)</span> 
+    <span style='color:#800000; '>"</span><span style='color:#0000e6; '>Anger</span><span style='color:#800000; '>"</span>
+</pre>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- End page content -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/onnxjs/dist/onnx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-load-image/2.20.1/load-image.all.min.js"
+        integrity="sha256-CD8WcpNpYLkkXvLCShFHA25g5JZIS2506n0r7wIRUtM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+        integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="/Emotions/site.js"></script>
+</body>
+
+</html>
