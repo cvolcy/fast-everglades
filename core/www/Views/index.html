@@ -29,11 +29,20 @@
         }
 
         .project {
-            position: relative;
+            height: 280px;
+            opacity: .99;
+        }
+
+        .project-title {
         }
 
         .project-description {
             text-align: justify;
+            flex: 2;
+        }
+
+        .project-footer {
+            flex: 1;
         }
 
         .project-hero {
@@ -43,6 +52,8 @@
             min-height: 100%;
             position: relative;
             padding: 10px;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-hero-background {
@@ -89,17 +100,119 @@
         <div class="w3-hide-large" style="margin-top:83px"></div>
 
         <div class="w3-row">
-            <div class="w3-third">
-                <div class="project project-hero">
+            <div class="project w3-third w3-gray">
+                <div class="project-hero">
                     <div class="project-hero-background"
                         data-background="https://www.w3schools.com/w3images/natureboy.jpg"></div>
                     <h4 class="project-title">Emotion recognition <i class="fab fa-node-js"></i></h4>
                     <div class="project-description">
                         <p>Real time emotion recognition using client side inference model. The model is using an
                             enhanced version of FER emotion dataset called FER+.</p>
+                    </div>
+                    <div class="project-footer">
                         <p><a href="/emotion-recognition">Demo Here</a></p>
                     </div>
                 </div>
+            </div>
+            <div class="project w3-third w3-pink">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://www.w3schools.com/w3images/natureboy.jpg"></div>
+                    <h4 class="project-title">GraphQL <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>A simple lambda in nodejs that return the informations about the current date and time of the server.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/graphql?query={videos(lang:%22fr%22){title%20url}}">Demo Here</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="project w3-third w3-green">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://www.w3schools.com/w3images/natureboy.jpg"></div>
+                    <h4 class="project-title">Cowsay <i class="fab fa-python"></i></h4>
+                    <div class="project-description">
+                        <p>A lambda function in python that render a cow in ASCII art with a message
+                            You can update the message by setting the message query string parameter in the url.
+                           <br> Exemple : <a href="/api/cowsay?message=Hello%20Boi">Message = 'Hello Boi'</a></p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/cowsay?message=Hello%20Boi">Demo Here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w3-row">
+            <div class="project w3-third w3-teal">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://www.w3schools.com/w3images/natureboy.jpg"></div>
+                    <h4 class="project-title">Date <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>A simple lambda in nodejs that return the informations about the current date and time of the server.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/date">Demo Here</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="project w3-third w3-deep-orange">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://www.w3schools.com/w3images/natureboy.jpg"></div>
+                    <h4 class="project-title">Videos <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>A lambda function in nodejs using mongoose the fetch data about the available videos in the database.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/videos">Demo Here</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="project w3-third w3-black">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://www.w3schools.com/w3images/natureboy.jpg"></div>
+                    <h4 class="project-title"></h4>
+                    <div class="project-description">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About Me -->
+        <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
+            <h4><b>About Me</b></h4>
+            <img src="/Images/avatar.png" alt="Me" class="w3-image w3-padding-32" width="600" height="650">
+            <div class="w3-content w3-justify" style="max-width:600px">
+                <h4>
+                    I'm Clervens Volcy, a programmer from Montréal
+                </h4>
+                <p>
+                    Software Engineer bachelor with a keen interest in solving problems, Web technologies, machine learning and
+                    artificial intelligence.
+                </p>
+                <p>
+                    The Fast Everglades project acts as a monorepo for the multiple tests and side projects i'm doing the Azure
+                    cloud platform.
+                </p>
+                <hr class="w3-opacity">
+                <h4 class="w3-padding-16">Technical Skills</h4>
+                <p class="w3-wide">Photography</p>
+                <div class="w3-white">
+                    <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
+                </div>
+                <p class="w3-wide">Web Design</p>
+                <div class="w3-white">
+                    <div class="w3-container w3-padding-small w3-center w3-grey" style="width:85%">85%</div>
+                </div>
+                <p class="w3-wide">Photoshop</p>
+                <div class="w3-white">
+                    <div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>
+                </div>
+                <p><button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">Download
+                        Resume</button></p>
+                <hr class="w3-opacity">
             </div>
         </div>
     </div>
