@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <style>
         pre {
             overflow-x: auto;
@@ -16,227 +18,225 @@
             white-space: -o-pre-wrap;
             word-wrap: break-word;
         }
+
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: "Raleway", sans-serif
+        }
+
+        .project {
+            height: 280px;
+            opacity: .99;
+        }
+
+        .project-title {
+        }
+
+        .project-description {
+            text-align: justify;
+            flex: 2;
+        }
+
+        .project-footer {
+            flex: 1;
+        }
+
+        .project-hero {
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+            min-height: 100%;
+            position: relative;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-hero-background {
+            background-size: cover;
+            background-position: center;
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.4;
+        }
+        @media (max-width: 992px) {
+            footer {
+                margin-left: 0!important;
+                margin-right: 0!important;
+            }
+        }
     </style>
 </head>
 
-<body class="w3-content w3-light-grey" style="max-width:1300px">
+<body class="w3-content w3-light-grey" style="max-width:100%">
 
-    <!-- First Grid: Logo & About -->
-    <div class="w3-row">
-        <div class="w3-half w3-black w3-container w3-center" style="height:700px">
-            <div class="w3-padding-64">
-                <h1>Fast Everglades</h1>
+    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center"
+        style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
+        <h3 class="w3-padding-64 w3-center"><b>Fast<br>Everglades</b></h3>
+        <a href="javascript:void(0)" onclick="w3_close()"
+            class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
+        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">PORTFOLIO</a>
+        <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">ABOUT ME</a>
+        <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
+    </nav>
+
+    <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
+        <span class="w3-left w3-padding">Fast Everglades</span>
+        <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+    </header>
+
+    <div class="w3-main" style="margin-left: 300px;">
+        <!-- Push down content on small screens -->
+        <div class="w3-hide-large" style="margin-top:83px"></div>
+
+        <div class="w3-row">
+            <div class="project w3-third w3-dark-grey">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/e9262c3d9263ee9b1243f1b0cf58a857.jpg"></div>
+                    <h4 class="project-title">Emotion recognition <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>Real time emotion recognition using client side inference model. The model is using an
+                            enhanced version of FER emotion dataset called FER+.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/emotion-recognition">Demo Here</a></p>
+                    </div>
+                </div>
             </div>
-            <div class="w3-padding-64">
-                <a href="/" class="w3-button w3-black w3-block w3-hover-blue-grey w3-padding-16">Home</a>
-                <a href="/api/date" class="w3-button w3-black w3-block w3-hover-teal w3-padding-16">
-                    <svg height="20" viewBox="0 0 15 20" fill="none" style="vertical-align: middle;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                        <rect x="0.5" y="0.5" width="14" height="18" rx="2.5" stroke="#fff"></rect>
-                    </svg>
-                    Date
-                </a>
-                <a href="/api/videos" class="w3-button w3-black w3-block w3-hover-deep-orange w3-padding-16">
-                    <svg height="20" viewBox="0 0 15 20" fill="none" style="vertical-align: middle;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                        <rect x="0.5" y="0.5" width="14" height="18" rx="2.5" stroke="#fff"></rect>
-                    </svg>
-                    Videos
-                </a>
-                <a href='/api/graphql?query={videos(lang:"fr"){title url}}' class="w3-button w3-black w3-block w3-hover-pink w3-padding-16">
-                    <svg height="20" viewBox="0 0 15 20" fill="none" style="vertical-align: middle;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                        <rect x="0.5" y="0.5" width="14" height="18" rx="2.5" stroke="#fff"></rect>
-                    </svg>
-                    GraphQL
-                </a>
-                <a href="/api/cowsay?message=Hello World,\nYou can update this message by setting\nthe query string parameter 'message'." class="w3-button w3-black w3-block w3-hover-green w3-padding-16">
-                    <svg height="20" viewBox="0 0 15 20" fill="none" style="vertical-align: middle;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                        <rect x="0.5" y="0.5" width="14" height="18" rx="2.5" stroke="#fff"></rect>
-                    </svg>
-                    Cowsay
-                </a>
-                <a href="/emotion-recognition" class="w3-button w3-black w3-block w3-hover-gray w3-padding-16">
-                    <svg height="20" viewBox="0 0 15 20" fill="none" style="vertical-align: middle;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                        <rect x="0.5" y="0.5" width="14" height="18" rx="2.5" stroke="#fff"></rect>
-                    </svg>
-                    Emotion recognition
-                </a>
+            <div class="project w3-third w3-pink">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/0001279117911.jpg"></div>
+                    <h4 class="project-title">GraphQL <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>A simple lambda in nodejs that return the informations about the current date and time of the server.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/graphql?query={videos(lang:%22fr%22){title%20url}}">Demo Here</a></p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="w3-half w3-blue-grey w3-container" style="height:700px">
-            <div class="w3-padding-64 w3-center">
-                <h1>About Me</h1>
-                <img src="/Images/avatar.png" class="w3-margin w3-circle" alt="Avatar" style="width:50%">
-                <div class="w3-left-align w3-padding-large">
-                    <h4>
-                        I'm Clervens Volcy, a programmer from Montréal
-                    </h4>
-                    <p>
-                        Software Engineer bachelor with a keen interest in solving problems, Web technologies, machine learning and artificial intelligence.
-                    </p>
-                    <p>
-                        The Fast Everglades project acts as a monorepo for the multiple tests and side projects i'm doing the Azure cloud platform.
-                    </p>
+            <div class="project w3-third w3-green">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/aa4c1b80ea25d9d1230967b5347d65602.jpg"></div>
+                    <h4 class="project-title">Cowsay <i class="fab fa-python"></i></h4>
+                    <div class="project-description">
+                        <p>A lambda function in python that render a cow in ASCII art with a message
+                            You can update the message by setting the message query string parameter in the url.
+                           <br> Exemple : <a href="/api/cowsay?message=Hello%20Boi">Message = 'Hello Boi'</a></p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/cowsay?message=Hello%20Boi">Demo Here</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Second Grid: Date & Videos -->
-    <div class="w3-row">
-        <div class="w3-half w3-teal w3-container" style="height:700px">
-            <div class="w3-padding-64">
-                <h2 class="w3-center">
-                    <svg height="30" viewBox="0 0 15 20" fill="none" style="vertical-align: sub;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                    </svg>
-                    Date <i class="fab fa-node-js"></i>
-                </h2>
-                <p class="w3-padding-large">
-                    A simple lambda in nodejs that return the informations about the current date and time of the server.
-                </p>
-                <p class="w3-padding-large">Example : <pre><code>
-    const data = {
-        timestamp: Unix epoch timestamp in milliseconds,
-        date: The current date in text,
-        time: The current time in text
-              formatted as (hh:mm:ss GMT+0000 (UTC),
-        timezoneOffset: The timezone offset of the server's timezone,
-        name: My name,
-        email: My email
-    };
-                        </code></pre>
-                </p>
+        <div class="w3-row">
+            <div class="project w3-third w3-teal">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/dfc3a12f93431b141d2cf03f0fe5c65d.jpg"></div>
+                    <h4 class="project-title">Date <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>A simple lambda in nodejs that return the informations about the current date and time of the server.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/date">Demo Here</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="project w3-third w3-deep-orange">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/dwarf_mongoose2.jpg"></div>
+                    <h4 class="project-title">Videos <i class="fab fa-node-js"></i></h4>
+                    <div class="project-description">
+                        <p>A lambda function in nodejs using mongoose the fetch data about the available videos in the database.</p>
+                    </div>
+                    <div class="project-footer">
+                        <p><a href="/api/videos">Demo Here</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="project w3-third w3-hide-small w3-black">
+                <div class="project-hero">
+                    <div class="project-hero-background"
+                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/383512d91854114fb0d3de5771e57a27.jpg"></div>
+                    <h4 class="project-title"></h4>
+                    <div class="project-description">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="w3-half w3-deep-orange w3-container" style="height:700px">
-            <div class="w3-padding-64">
-                <h2 class="w3-center">
-                    <svg height="30" viewBox="0 0 15 20" fill="none" style="vertical-align: sub;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                    </svg>
-                    Videos <i class="fab fa-node-js"></i>
-                </h2>
-                <p class="w3-padding-large">
-                    A lambda function in nodejs using mongoose the fetch data about the available videos in the database.
+        <!-- About Me -->
+        <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
+            <h4><b>About Me</b></h4>
+            <img src="https://fast-everglades.azurewebsites.net/Images/avatar.png" alt="Me" class="w3-image w3-padding-32" width="600" height="650">
+            <div class="w3-content w3-justify" style="max-width:600px">
+                <h4>
+                    I'm Clervens Volcy, a programmer from Montréal
+                </h4>
+                <p>
+                    Software Engineer bachelor with a keen interest in solving problems, Web technologies, machine learning and
+                    artificial intelligence.
                 </p>
-                <p class="w3-padding-large">Example : <pre><code>
-    {
-        "videos": [
-            {
-                "_id": "5ba152f9fb6fc072da048559",
-                "title": "The 7 Steps of Machine Learning (AI Adventures)",
-                "description": "A description for my video.",
-                "url": "https://www.youtube.com/embed/nKW8Ndu7Mjw"
-            },
-            { ... },
-            ...
-        ],
-        "count": 123
-    }
-                </code></pre>
+                <p>
+                    The Fast Everglades project acts as a monorepo for the multiple tests and side projects i'm doing the Azure
+                    cloud platform.
                 </p>
+                <!-- <hr class="w3-opacity">
+                <h4 class="w3-padding-16">Technical Skills</h4>
+                <p class="w3-wide">Photography</p>
+                <div class="w3-white">
+                    <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
+                </div>
+                <p><button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">Download Resume</button></p> -->
+                <hr class="w3-opacity">
             </div>
         </div>
-    </div>
-    <!-- Third Grid: GraphQL & Cowsay -->
-    <div class="w3-row">
-        <div class="w3-half w3-pink w3-container" style="height:700px">
-            <div class="w3-padding-64">
-                <h2 class="w3-center">
-                    <svg height="30" viewBox="0 0 15 20" fill="none" style="vertical-align: sub;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z"
-                            fill="#fff"></path>
-                    </svg>
-                    GraphQL <i class="fab fa-node-js"></i>
-                </h2>
-                <p class="w3-padding-large">
-                    A lambda in nodejs that acts as a GraphQL server connected to a MongoDB database. <br>
-                    It serve two models (Videos and Books).
-                </p>
-                <p class="w3-padding-large">Example : <pre><code>
-    {
-        videos(lang:"en") {
-            title url
-        }
-    }
-    // Output
-    {
-        "videos": [
-            {
-                "title": "The 7 Steps of Machine Learning (AI Adventures)",
-                "url": "https://www.youtube.com/embed/nKW8Ndu7Mjw"
-            },
-            { ... },
-            ...
-        ]
-    }
-                </code></pre>
-                </p>
-            </div>
-        </div>
-        <div class="w3-half w3-green w3-container" style="height:700px">
-            <div class="w3-padding-64">
-                <h2 class="w3-center">
-                    <svg height="30" viewBox="0 0 15 20" fill="none" style="vertical-align: sub;">
-                        <path d="M3.5 14.435h1.816l1.99-4.622h.13l1.217 3.267c.404 1.084.901 1.42 2.047 1.42.317 0 .591-.032.8-.097v-1.246c-.115.02-.238.045-.346.045-.519 0-.771-.174-.995-.736l-2.133-5.39C7.212 5.016 6.55 4.5 5.114 4.5c-.28 0-.49.032-.742.09v1.246c.195-.025.288-.038.404-.038.872 0 1.124.206 1.628 1.4l.238.582L3.5 14.435z" fill="#fff"></path>
-                    </svg>
-                    Cowsay <i class="fab fa-python"></i>
-                </h2>
-                <p class="w3-padding-large">
-                    A lambda function in python that render a cow in ASCII art with a message<br>
-                    You can update the message by setting the <em>message</em> query string parameter in the url.
-                </p>
-                <p class="w3-padding-large">
-                    <small>The eyes of the cow are always random.</small>
-                </p>
-                <p class="w3-padding-large">
-                    Exemple : <a href="/api/cowsay?message=Hello Boi">Message = 'Hello Boi'</a><br>
-                    Output : <br>
-                    <pre>
-    ___________ 
-    < Hello Boi >
-     ----------- 
-         \   ^__^
-          \  (oo)\_______
-             (__)\       )\/\
-               ||----w |
-               ||     ||
-                    </pre>
-                </p>
+        <!-- Contact -->
+        <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="contact">
+            <h4><b>Contact</b></h4>
+            <div class="w3-content w3-justify" style="max-width:600px">
+                <p>You can contact me via <a href="mailto:clervens.volcy@gmail.com">email</a> or <a href="https://www.linkedin.com/in/clervens-volcy-5522a670/">LinkedIn <i class="fab fa-linkedin"></i></a></p>
             </div>
         </div>
     </div>
-    <!-- Fourth Grid: Emotion & null -->
-    <div class="w3-row">
-        <div class="w3-half w3-gray w3-container" style="height:700px">
-            <div class="w3-padding-64">
-                <h2 class="w3-center">
-                    Emotion recognition <i class="fab fa-node-js"></i>
-                </h2>
-                <p class="w3-padding-large">
-                    Real time emotion recognition using client side inference model. The model is using an enhanced
-                    version of FER emotion dataset called FER+.
-                </p>
-                <p class="w3-padding-large">
-                    <a href="/emotion-recognition">Demo Here</a>
-                </p>
-            </div>
+
+    <footer class="w3-container w3-padding-32 w3-grey">
+        <div class="w3-row-padding">
+            <div class="w3-third"></div>
+            <div class="w3-third"></div>
+            <div class="w3-third"></div>
         </div>
-        <div class="w3-half w3-black w3-container" style="height:700px">
-            <div class="w3-padding-64">
-                <h2 class="w3-center"></h2>
-                <p class="w3-padding-large"></p>
-            </div>
-        </div>
-    </div>
+    </footer>
     <!-- Footer -->
-    <footer class="w3-container w3-black w3-padding-16" style="position: fixed; max-width: 1300px; width: 100%; bottom: 0;">
+    <footer class="w3-container w3-black w3-padding-16"
+        style="position: fixed; width: 100%; bottom: 0; margin-left: 300px;">
         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </footer>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".project-hero-background").forEach(element => {
+                let image = element.getAttribute("data-background");
+                if (image) {
+                    element.style.backgroundImage = "url(" + image + ")";
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
