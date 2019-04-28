@@ -8,6 +8,13 @@
             },
             "backendUri": "https://localhost/api/staticFile?file=Views/index.html"
         },
+        "bring-umbrella": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/bring-umbrella"
+            },
+            "backendUri": "https://localhost/api/staticFile?file=Views/umbrella.html"
+        },
         "emotion-recognition": {
             "matchCondition": {
                 "methods": [ "GET" ],
