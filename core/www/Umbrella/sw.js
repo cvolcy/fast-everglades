@@ -1,42 +1,49 @@
-const staticAssets = [
-    './',
-    './css/style.css',
-    './css/w3.css',
-    './images/forestbridge.jpg'
-];
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.2.0/workbox-sw.js');
 
-self.addEventListener('install', async event => {
-    const cache = await caches.open('static');
-    cache.addAll(staticAssets);
-});
+if (workbox) {
+    console.log(`Yay! Workbox is loaded 🎉`);
 
-self.addEventListener('fetch', event => {
-    const { request } = event;
-    const url = new URL(request.url);
-    if (url.origin === location.origin) {
-        event.respondWith(cacheData(request));
-    } else {
-        event.respondWith(networkFirst(request));
-    }
+    // cache name
+    workbox.core.setCacheNameDetails({
+        prefix: 'umbrella-cache',
+        precache: 'precache',
+        runtime: 'runtime',
+    });
 
-});
+    workbox.routing.registerRoute(
+        new RegExp('\.(css|ttf)$'),
+        new workbox.strategies.CacheFirst({
+            cacheName: 'umbrella-cache-Stylesheets',
+            plugins: [
+                new workbox.expiration.Plugin({
+                    maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+                    maxEntries: 20, // only cache 20 request
+                    purgeOnQuotaError: true
+                })
+            ]
+        })
+    );
 
-async function cacheData(request) {
-    const cachedResponse = await caches.match(request);
-    return cachedResponse || fetch(request);
-}
+    workbox.routing.registerRoute(
+        new RegExp('\.(png|svg|jpg|jpeg|ico)$'),
+        new workbox.strategies.CacheFirst({
+            cacheName: 'umbrella-cache-Images',
+            plugins: [
+                new workbox.expiration.Plugin({
+                    maxAgeSeconds: 60 * 60 * 24 * 7,
+                    maxEntries: 50,
+                    purgeOnQuotaError: true
+                })
+            ]
+        })
+    );
 
-async function networkFirst(request) {
-    const cache = await caches.open('dynamic');
+    workbox.precaching.precacheAndRoute([
+        './',
+        './index.html',
+        './manifest.json'
+    ]);
 
-    try {
-        const response = await fetch(request);
-        if (!request.url.startWith("chrome-extension://"))
-            cache.put(request, response.clone());
-        return response;
-    } catch (error) {
-        return await cache.match(request);
-
-    }
-
+} else {
+    console.log(`Boo! Workbox didn't load 😬`);
 }
