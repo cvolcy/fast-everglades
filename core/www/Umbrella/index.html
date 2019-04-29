@@ -33,7 +33,7 @@
     <script type="text/javascript">
         window.addEventListener('load', async e => {
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/Umbrella/sw.js', { scope: './Umbrella/' }).then(function(registration) {
+                navigator.serviceWorker.register('/Umbrella/sw.js', { scope: '.' }).then(function(registration) {
                     // Registration was successful
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
                 }, function(err) {
