@@ -41,6 +41,7 @@ if (workbox) {
     workbox.precaching.precacheAndRoute([
         './',
         './index.html',
+        './app.js',
         './manifest.json'
     ]);
 
