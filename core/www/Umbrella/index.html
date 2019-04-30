@@ -20,9 +20,9 @@
             Umbrella
         </div>
         <div class="w3-display-middle">
-            <h1 class="w3-jumbo w3-animate-top">{{ Label }}</h1>
+            <h1 id="bring-umbrella" class="w3-jumbo w3-center w3-animate-top">{{ Label }}</h1>
             <hr class="w3-border-grey" style="margin:auto;width:40%">
-            <p class="w3-large w3-center">{{ Message }}</p>
+            <p id="bring-umbrella-message" class="w3-large w3-center w3-animate-top">{{ Message }}</p>
         </div>
         <button id="btnA2HS" class="w3-button w3-teal" style="position: absolute;bottom: 5%;right: 5%;display: none;">Add To Home Screen</button>
         <div class="w3-display-bottomleft w3-padding-large">
@@ -69,6 +69,22 @@
                         });
                 });
             });
+
+            const url = "https://api.openweathermap.org/data/2.5/forecast?q=montreal,ca&appid=2baee98d271c379b0171d69b19def603";
+            const shouldBringUmbrella = await fetch(url)
+                .then((resp) => resp.json())
+                .then((data) => data.list.slice(0, 8))
+                .then((data) => data.filter(
+                    (e) => e.weather.some(
+                        (w) => (w.id >= 200 && w.id < 300) || w.description.includes("rain")
+                    )
+                ))
+                .then((data) => data.length > 0);
+
+            const shouldBringHeader = document.querySelector("#bring-umbrella");
+            const shouldBringMsg = document.querySelector("#bring-umbrella-message");
+            shouldBringHeader.textContent = shouldBringUmbrella ? "You should bring your umbrella" : "You should not need your umbrella today";
+            shouldBringMsg.textContent = shouldBringUmbrella ? "Looks like it might rain today, you should bring your umbrella today" : "The forecast predicts that it should not be a rainy day";
         });
     </script>
 </body>
