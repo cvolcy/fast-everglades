@@ -38,10 +38,23 @@ if (workbox) {
         })
     );
 
+    workbox.routing.registerRoute(
+        '/Umbrella/app.js',
+        new workbox.strategies.StaleWhileRevalidate({
+            cacheName: 'umbrella-cache-script',
+            plugins: [
+                new workbox.expiration.Plugin({
+                    maxAgeSeconds: 60 * 60 * 24 * 7,
+                    maxEntries: 50,
+                    purgeOnQuotaError: true
+                })
+            ]
+        })
+    );
+
     workbox.precaching.precacheAndRoute([
         './',
         './index.html',
-        './app.js',
         './manifest.json'
     ]);
 
