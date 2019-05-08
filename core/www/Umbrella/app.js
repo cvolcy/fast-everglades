@@ -9,6 +9,10 @@ window.addEventListener('load', async e => {
         });
     }
 
+    if (window.outerWidth * window.outerHeight > 438000) {
+        document.querySelector("#bring-umbrella").classList.add("w3-jumbo");
+    }
+
     window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
