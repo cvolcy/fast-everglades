@@ -2,8 +2,7 @@ import random
 import logging
 import azure.functions as func
 
-import sys 
-sys.path.insert(0, '../.env/Lib/site-packages')
+import sys
 from cowpy import cow
 
 DEFAULT_MSG = 'Hello World, This is Fast Everglades.\nYou can update this message by setting\nthe query string parameter \'message\'.'
