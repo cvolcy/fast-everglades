@@ -1,1 +1,4 @@
-
+.venv
+.vscode
+detection
+local.settings.json
