@@ -19,8 +19,7 @@ def get_message(req):
     if not message:
         try:
             req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
             message = req_body.get('message')
-    return message if message else DEFAULT_MSG
+        except (ValueError, AttributeError) as e:
+            message = DEFAULT_MSG
+    return message
