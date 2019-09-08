@@ -48,7 +48,7 @@
                 "methods": [ "GET" ],
                 "route": "/api/cowsay"
             },
-            "backendUri": "https://zeit-my-app.now.sh/cowsay.py"
+            "backendUri": "https://fast-everglades-py.azurewebsites.net/api/cowsay"
         },
         "files": {
             "matchCondition": {
