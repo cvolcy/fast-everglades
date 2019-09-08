@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fast Everglades | Minesweeper</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Emotions/site.css">
+</head>
+
+<body>
+    <div id="navigation">
+
+        <!-- Sidebar/menu -->
+        <nav class="w3-sidebar w3-yellow w3-collapse w3-top w3-large w3-padding"
+            style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+            <a href="javascript:void(0)" @click="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+                style="width:100%;font-size:22px">Close
+                Menu</a>
+            <div class="w3-container">
+                <h3 class="w3-padding-64"><b>Fast<br>Everglades</b></h3>
+            </div>
+            <div class="w3-bar-block">
+                <a href="#" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+                <a href="#Overview" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Overview</a>
+                <a href="#Architecture" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-white">Architecture</a>
+                <a href="#Demo" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-white">Demo</a>
+            </div>
+        </nav>
+
+        <!-- Top menu on small screens -->
+        <header class="w3-container w3-top w3-hide-large w3-yellow w3-xlarge w3-padding">
+            <a href="javascript:void(0)" class="w3-button w3-yellow w3-margin-right" @click="w3_open()">☰</a>
+            <span>Vue.JS | Minesweeper</span>
+        </header>
+
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large" @click="w3_close()" style="cursor:pointer" title="close side menu"
+            id="myOverlay"></div>
+
+    </div>
+    <!-- !PAGE CONTENT! -->
+    <div id="app" class="w3-main">
+        <div id="Overview" class="w3-container" style="margin-top: 80px">
+            <h1 class="w3-jumbo" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><b>Minesweeper</b></h1>
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Overview.</b></h2>
+            <hr class="w3-round">
+            <p>
+                A minesweeper clone, built in using Vuejs and canvas.
+            </p>
+        </div>
+
+        <div id="Architecture" class="w3-container" style="margin-top: 80px">
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Architecture.</b></h2>
+            <hr class="w3-round">
+            
+            <div class="w3-display-container">
+                <img src="/Minesweeper/arch.png" alt="Game Architecture"
+                    style="max-width: 100%; margin-bottom: 20px;">
+                <em>A simplified representation of the architecture used for the game.</em>
+            </div>
+        </div>
+
+        <div id="Demo" class="w3-container" style="margin-top: 80px">
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Demo.</b></h2>
+            <hr class="w3-round">
+            <div id="game">
+                <div v-if="state == GAME_STATE.PENDING">
+                    <div class="w3-row">
+                        <div class="w3-col l3 m4 s12">
+                            <label>Rows</label>
+                            <input  v-model.number="rows"
+                                class="w3-input w3-border" min="5" max="50" type="number">
+                        </div>
+                        <div class="w3-col l3 m4 s12">
+                            <label>Columns</label>
+                            <input  v-model.number="cols"
+                                class="w3-input w3-border" min="5" max="50" type="number">
+                        </div>
+                        <div class="w3-col l3 m4 s12">
+                            <label>Mines</label>
+                            <input  v-model.number="mines"
+                                class="w3-input w3-border" min="1" :max="Math.floor(cols*rows*0.9)" type="number">
+                        </div>
+                    </div>
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col s12">
+                            <button class="w3-button w3-yellow w3-block" @click="startGame">Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="state != GAME_STATE.PENDING">
+                    <canvas ref="canvas"
+                        @click="onCellClick"
+                        width="500" height="300"
+                        style="border: gray 1px solid;"></canvas>
+            
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col l12">
+                            <button class="w3-button w3-yellow w3-block" @click="restart">Restart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/Minesweeper/site.js"></script>
+</body>
+
+</html>

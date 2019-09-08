@@ -1,4 +1,10 @@
 {
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "azureFunctions.deploySubpath": "py2.zip",
+    "azureFunctions.pythonVenv": ".venv",
     "azureFunctions.projectLanguage": "Python",
-    "azureFunctions.projectRuntime": "~2"
+    "azureFunctions.projectRuntime": "~2",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "func: pack",
+    "terminal.integrated.shellArgs.windows": [],
 }
