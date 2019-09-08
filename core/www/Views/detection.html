@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fast Everglades | Detection</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .w3-main {
+            margin-left:340px;
+            margin-right:40px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navigation">
+
+        <!-- Sidebar/menu -->
+        <nav class="w3-sidebar w3-cyan w3-collapse w3-top w3-large w3-padding"
+            style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+            <a href="javascript:void(0)" @click="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+                style="width:100%;font-size:22px">Close
+                Menu</a>
+            <div class="w3-container">
+                <h3 class="w3-padding-64"><b>Fast<br>Everglades</b></h3>
+            </div>
+            <div class="w3-bar-block">
+                <a href="#" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+                <a href="#Overview" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Overview</a>
+                <a href="#Architecture" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-white">Architecture</a>
+                <a href="#Demo" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-white">Demo</a>
+            </div>
+        </nav>
+
+        <!-- Top menu on small screens -->
+        <header class="w3-container w3-top w3-hide-large w3-cyan w3-xlarge w3-padding">
+            <a href="javascript:void(0)" class="w3-button w3-cyan w3-margin-right" @click="w3_open()">☰</a>
+            <span>Vue.JS | Detection</span>
+        </header>
+
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large" @click="w3_close()" style="cursor:pointer" title="close side menu"
+            id="myOverlay"></div>
+
+    </div>
+    <!-- !PAGE CONTENT! -->
+    <div id="app" class="w3-main">
+        <div id="Overview" class="w3-container" style="margin-top: 80px">
+            <h1 class="w3-jumbo" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><b>Detection</b></h1>
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Overview.</b></h2>
+            <hr class="w3-round">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. At ipsum natus enim qui recusandae earum hic voluptate ad laudantium tenetur itaque quod numquam, error, vitae consequuntur delectus fugit accusantium voluptas?
+            </p>
+        </div>
+
+        <div id="Architecture" class="w3-container" style="margin-top: 80px">
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Architecture.</b></h2>
+            <hr class="w3-round">
+            
+            <div class="w3-display-container">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, recusandae laudantium eius itaque possimus, temporibus dicta in commodi maiores doloribus id dolorem voluptate. Autem aperiam placeat rem suscipit quidem nobis!
+            </div>
+        </div>
+
+        <div id="Demo" class="w3-container" style="margin-top: 80px">
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Demo.</b></h2>
+            <hr class="w3-round">
+            <div id="detection-demo"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</body>
+
+</html>
