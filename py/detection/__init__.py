@@ -56,19 +56,19 @@ def validate_input(req: func.HttpRequest, req_key: str = 'input') -> str:
     if input:
         if not isinstance(input,(list, np.ndarray)):
             return None
-        return input
+        return np.array(input)
     else:
         return None
 
 def letterbox_image(image, size):
     '''resize image with unchanged aspect ratio using padding'''
-    iw, ih = image.size
+    iw, ih = image.shape[1], image.shape[0]
     w, h = size
     scale = min(w/iw, h/ih)
     nw = int(iw*scale)
     nh = int(ih*scale)
 
-    image = image.resize((nw,nh), Image.BICUBIC)
+    image = Image.fromarray(image.astype(np.uint8)).resize((nw,nh), Image.BICUBIC)
     new_image = Image.new('RGB', size, (128,128,128))
     new_image.paste(image, ((w-nw)//2, (h-nh)//2))
     return new_image
@@ -83,7 +83,7 @@ def preprocess(img):
 def detection(model, image):
     image_data = preprocess(image)
     feed_f = dict(zip(['input_2', 'image_shape'],
-                        (image_data, np.array([image.size[1], image.size[0]], dtype='float32').reshape(1, 2))))
+                        (image_data, np.array([image.shape[1], image.shape[0]], dtype='float32').reshape(1, 2))))
     all_boxes, all_scores, indices = model.run(None, input_feed=feed_f)
 
     out_boxes, out_scores, out_classes = [], [], []
