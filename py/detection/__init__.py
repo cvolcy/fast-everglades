@@ -1,11 +1,10 @@
 import json
+import time
 import logging
 import colorsys
-import requests
 import numpy as np
 import azure.functions as func
 import onnxruntime as rt
-from io import BytesIO
 from os.path import dirname
 from PIL import Image
 
@@ -15,13 +14,20 @@ sess = rt.InferenceSession(dirname(__file__) + "/models/yolov3.onnx")
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
+    start_time = time.time()
     input_value = validate_input(req)
+    
+    t = time.time() - start_time
+    logging.info('Input parsed in %ims', t)
+    start_time = t
 
     if input_value is None:
-        return func.HttpResponse(json.dumps({ 'error': 'invalid input in param `image_path`' }, sort_keys=True, indent=4), status_code=200)
+        return func.HttpResponse(json.dumps({ 'error': 'invalid input in param `input`' }, sort_keys=True, indent=4), status_code=200)
 
-    image = get_image(input_value)
-    result = detection(sess, image)
+    result = detection(sess, input_value)
+
+    t = time.time() - start_time
+    logging.info('Dectection in %ims', t)
 
     data = []
     for i in range(len(result[0])):
@@ -36,11 +42,21 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     return func.HttpResponse(json.dumps({ 'results': data }, sort_keys=True, indent=4), status_code=200)
 
-def validate_input(req: func.HttpRequest, req_key: str = 'image_path') -> str:
-    image_path = req.params.get('image_path')
+def validate_input(req: func.HttpRequest, req_key: str = 'input') -> str:
+    input = req.params.get(req_key)
 
-    if image_path:
-        return image_path
+    if not input:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            input = req_body.get(req_key)
+
+    if input:
+        if not isinstance(input,(list, np.ndarray)):
+            return None
+        return input
     else:
         return None
 
@@ -63,12 +79,6 @@ def preprocess(img):
     image_data /= 255.
     image_data = np.expand_dims(image_data, 0)
     return image_data
-
-def get_image(image_path):
-    response = requests.get(image_path)
-    image = Image.open(BytesIO(response.content))
-
-    return image
 
 def detection(model, image):
     image_data = preprocess(image)
