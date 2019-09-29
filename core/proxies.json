@@ -52,7 +52,7 @@
         },
         "detection": {
             "matchCondition": {
-                "methods": [ "POST" ],
+                "methods": [ "POST", "OPTIONS" ],
                 "route": "/api/detection"
             },
             "backendUri": "https://fast-everglades-py.azurewebsites.net/api/detection"
