@@ -50,6 +50,13 @@
             },
             "backendUri": "https://fast-everglades-py.azurewebsites.net/api/cowsay"
         },
+        "detection": {
+            "matchCondition": {
+                "methods": [ "POST" ],
+                "route": "/api/detection"
+            },
+            "backendUri": "https://fast-everglades-py.azurewebsites.net/api/detection"
+        },
         "files": {
             "matchCondition": {
                 "methods": [ "GET" ],
