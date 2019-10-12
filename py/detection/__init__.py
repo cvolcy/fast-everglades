@@ -18,7 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     input_value = validate_input(req)
     
     t = time.time() - start_time
-    logging.info('Input parsed in %ims', t)
+    logging.info(f'Input parsed in {t}ms')
     start_time = t
 
     if input_value is None:
@@ -27,7 +27,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     result = detection(sess, input_value)
 
     t = time.time() - start_time
-    logging.info('Dectection in %ims', t)
+    logging.info(f'Dectection in {t}ms')
 
     data = []
     for i in range(len(result[0])):
@@ -82,6 +82,12 @@ def preprocess(img):
 
 def detection(model, image):
     image_data = preprocess(image)
+
+    input_name = model.get_inputs()[0].name
+    label_name = model.get_outputs()[0].name
+
+    logging.info(f'Executing onnx with input: `{input_name}`, output: `{label_name}`')
+
     feed_f = dict(zip(['input_2', 'image_shape'],
                         (image_data, np.array([image.shape[1], image.shape[0]], dtype='float32').reshape(1, 2))))
     all_boxes, all_scores, indices = model.run(None, input_feed=feed_f)
