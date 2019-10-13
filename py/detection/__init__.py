@@ -1,10 +1,12 @@
-import json
-import time
-import logging
 import colorsys
-import numpy as np
+import json
+import logging
+import time
+import urllib
 import azure.functions as func
+import numpy as np
 import onnxruntime as rt
+from io import BytesIO
 from os.path import dirname
 from PIL import Image
 
@@ -22,9 +24,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     start_time = t
 
     if input_value is None:
-        return func.HttpResponse(json.dumps({ 'error': 'invalid input in param `input`' }, sort_keys=True, indent=4), status_code=200)
+        return func.HttpResponse(json.dumps({ 'error': 'invalid input in param `input`' }, sort_keys=True, indent=4), status_code=400)
 
-    result = detection(sess, input_value)
+    t = time.time() - start_time
+    image = get_image(input_value)
+    logging.info(f'Input parsed in {t}ms')
+    start_time = t
+
+    result = detection(sess, image)
 
     t = time.time() - start_time
     logging.info(f'Dectection in {t}ms')
@@ -43,22 +50,34 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     return func.HttpResponse(json.dumps({ 'results': data }, sort_keys=True, indent=4), status_code=200)
 
 def validate_input(req: func.HttpRequest, req_key: str = 'input') -> str:
-    input = req.params.get(req_key)
+    req_input = req.params.get(req_key)
 
-    if not input:
+    if not req_input:
         try:
             req_body = req.get_json()
         except ValueError:
             pass
         else:
-            input = req_body.get(req_key)
+            req_input = req_body.get(req_key)
 
-    if input:
-        if not isinstance(input,(list, np.ndarray)):
+    if req_input:
+        if not isinstance(req_input,(str)):
             return None
-        return input
+        return req_input
     else:
         return None
+
+def get_image(image_url):
+    response = urllib.request.urlopen(image_url)
+    
+    try:
+        response_data = response.file.read()
+    except AttributeError:
+        response_data = response.read()
+
+    image = Image.open(BytesIO(response_data))
+
+    return image
 
 def letterbox_image(image, size):
     '''resize image with unchanged aspect ratio using padding'''
