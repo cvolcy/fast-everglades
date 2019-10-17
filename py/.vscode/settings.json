@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "python.pythonPath": ".venv/bin/python",
     "azureFunctions.deploySubpath": "py2.zip",
     "azureFunctions.pythonVenv": ".venv",
     "azureFunctions.projectLanguage": "Python",
