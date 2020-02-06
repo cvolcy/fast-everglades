@@ -1,3 +1,5 @@
 .venv
 .vscode
 local.settings.json
+
+*.onnx
