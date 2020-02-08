@@ -16,7 +16,7 @@ def main(req: func.HttpRequest, context: func.Context)  -> func.HttpResponse:
             data = inference.predict(sess, np.array([data], dtype=np.float32))
             data = np.argmax(data[0], axis=1)
             data = data.tolist()[0]
-        except JSONDecodeError:
+        except ValueError:
             data = null
 
     return func.HttpResponse(json.dumps(inference.ormat_results(sess, data), indent=4), status_code=200)
