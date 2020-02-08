@@ -17,7 +17,7 @@ def main(req: func.HttpRequest, context: func.Context)  -> func.HttpResponse:
             data = np.argmax(data[0], axis=1)
             data = data.tolist()[0]
         except ValueError:
-            data = null
+            data = None
 
     return func.HttpResponse(json.dumps(inference.ormat_results(sess, data), indent=4), status_code=200)
 
