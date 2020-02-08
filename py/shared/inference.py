@@ -1,13 +1,13 @@
 import onnxruntime as rt
 from datetime import datetime, timezone
 
-def predict(sess: rt.InferenceSession, data: list[any]):
+def predict(sess: rt.InferenceSession, data: list):
     input_name = sess.get_inputs()[0].name
     label_name = sess.get_outputs()[0].name
 
-    return sess.run([label_name], { input_name: data) })[0]
+    return sess.run([label_name], { input_name: data })[0]
 
-def format_results(sess: rt.InferenceSession, data: list[any]) -> dict:
+def format_results(sess: rt.InferenceSession, data: list) -> dict:
     input_name = sess.get_inputs()[0].name
     input_shape = sess.get_inputs()[0].shape
     label_name = sess.get_outputs()[0].name
