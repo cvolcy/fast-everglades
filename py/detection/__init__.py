@@ -9,12 +9,15 @@ import onnxruntime as rt
 from io import BytesIO
 from os.path import dirname
 from PIL import Image
+from ..shared import load_model, inference
 
 MODEL_IMAGE_SIZE = (416, 416)
 CLASS_NAMES = ['Face']
-sess = rt.InferenceSession(dirname(__file__) + "/models/yolov3.onnx")
+inference_session = None
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
+    sess = get_inference_session()
+
     logging.info('Python HTTP trigger function processed a request.')
     start_time = time.time()
     input_value = validate_input(req)
@@ -47,8 +50,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             'score': float(result[2][i]),
         })
 
-    return func.HttpResponse(json.dumps({ 'results': data }, sort_keys=True, indent=4), status_code=200)
+    return func.HttpResponse(json.dumps(inference.format_results(sess, data), sort_keys=True, indent=4), status_code=200)
 
+
+def get_inference_session():
+    global inference_session
+
+    if inference_session is None:
+        inference_session = load_model.initialize('yolov3', 'yolov3.onnx')
+
+    return inference_session
 def validate_input(req: func.HttpRequest, req_key: str = 'input') -> str:
     req_input = req.params.get(req_key)
 

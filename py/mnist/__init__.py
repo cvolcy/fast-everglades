@@ -1,8 +1,7 @@
 import json
 import azure.functions as func
 import numpy as np
-from py.shared.load_model import initialize
-from py.shared.inference import predict, format_results
+from ..shared import load_model, inference
 
 inference_session = None
 
@@ -14,18 +13,18 @@ def main(req: func.HttpRequest, context: func.Context)  -> func.HttpResponse:
     if data is not None:
         try:
             data = json.loads(data)
-            data = predict(sess, np.array([data], dtype=np.float32))
+            data = inference.predict(sess, np.array([data], dtype=np.float32))
             data = np.argmax(data[0], axis=1)
             data = data.tolist()[0]
         except JSONDecodeError:
             data = null
 
-    return func.HttpResponse(json.dumps(format_results(sess, data), indent=4), status_code=200)
+    return func.HttpResponse(json.dumps(inference.ormat_results(sess, data), indent=4), status_code=200)
 
 def get_inference_session():
     global inference_session
 
     if inference_session is None:
-        inference_session = initialize('mnist', 'mnist.onnx')
+        inference_session = load_model.initialize('mnist', 'mnist.onnx')
 
     return inference_session
