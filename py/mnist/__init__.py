@@ -19,7 +19,7 @@ def main(req: func.HttpRequest, context: func.Context)  -> func.HttpResponse:
         except ValueError:
             data = None
 
-    return func.HttpResponse(json.dumps(inference.ormat_results(sess, data), indent=4), status_code=200)
+    return func.HttpResponse(json.dumps(inference.format_results(sess, data), indent=4), status_code=200)
 
 def get_inference_session():
     global inference_session
