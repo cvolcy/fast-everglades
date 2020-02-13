@@ -22,7 +22,7 @@ namespace fast_everglades
                 "index.html" : GetEnvironmentVariable("DEFAULT_PAGE");
 
         [FunctionName("staticFile")]
-        public static async Task<HttpResponseMessage> Run(
+        public static HttpResponseMessage Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {

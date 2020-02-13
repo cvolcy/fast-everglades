@@ -30,6 +30,7 @@ var app = new Vue({
     el: "#app",
     data: {
         loadedPercent: null,
+        isStarted: false,
         isLoadingModel: false,
         isInitModel: false,
         isInferring: false,
@@ -48,26 +49,27 @@ var app = new Vue({
             accuracy: 0.0
         }
     },
-    mounted: function () {
-        const that = this;
-        this.isLoadingModel = true;
-        axios.get("https://fasteverglades.blob.core.windows.net/emotions/model.onnx", {
-            onDownloadProgress: (progressEvent) => {
-                if (progressEvent.lengthComputable) {
-                    that.loadedPercent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                }
-            },
-            responseType: 'arraybuffer'
-        })
-        .then((response) => {
-            const modelFile = response.data;  
-            that.isLoadingModel = false;
-            that.isInitModel = true;
-            that.loadedPercent = null;
-            that.initModel(modelFile);
-        });
-    },
     methods: {
+        loadModel() {
+            const context = this;
+            this.isLoadingModel = true;
+            this.isStarted = true;
+            axios.get("https://fasteverglades.blob.core.windows.net/emotions/model.onnx", {
+                onDownloadProgress: (progressEvent) => {
+                    if (progressEvent.lengthComputable) {
+                        context.loadedPercent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    }
+                },
+                responseType: 'arraybuffer'
+            })
+            .then((response) => {
+                const modelFile = response.data;  
+                context.isLoadingModel = false;
+                context.isInitModel = true;
+                context.loadedPercent = null;
+                context.initModel(modelFile);
+            });
+        },
         initModel(model) {
             const myOnnxSession = new onnx.InferenceSession();
             const canvas = document.querySelector("#image-canvas");
