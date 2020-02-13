@@ -63,7 +63,10 @@
         <div class="w3-container" style="margin-top:75px" id="Inference">
             <h1 class="w3-xxxlarge w3-text-gray"><b>Inference.</b></h1>
             <hr class="w3-round">
-            <div class="w3-row" style="position: relative;">
+            <div v-if="isStarted"
+                class="w3-row"
+                style="position: relative;"
+            >
                 <div v-if="isLoadingModel || isInitModel || isInferring" class="wait-spinner w3-row w3-gray">
                     <p class="w3-center">
                         <i class="fa fa-spinner fa-spin" style="font-size: 4em"></i><br>
@@ -82,7 +85,7 @@
                             <span v-if="prediction.label">{{ prediction.label }}</span>
                             <span v-if="prediction.accuracy">{{(prediction.accuracy * 100).toFixed(2) }}%</span>
                         </p>
-                        <input type="file" name="image-file" id="image-file" accept="image/*">
+                        <input type="file" name="image-file" id="image-file" class="w3-button w3-light-grey" accept="image/*">
                     </div>
                 </div>
                 <div class="w3-col m4 l3">
@@ -95,6 +98,10 @@
                         </li>
                     </transition-group>
                 </div>
+            </div>
+            <div v-else>
+                Click on the button below to load the ONNX model to perform inference. 
+                <button class="w3-button w3-light-grey" @click="loadModel">Load model</button>
             </div>
         </div>
 
