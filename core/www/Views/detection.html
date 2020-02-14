@@ -58,8 +58,8 @@
             <h2 class="w3-xxxlarge w3-text-gray"><b>Overview.</b></h2>
             <hr class="w3-round">
             <p>
-                An objects detection neural network built with the YOLOv3 architecture.
-                The model was made using keras then i've retrain the Yolo model's to detect faces using the <a href="http://www.face-rec.org/databases/" target="_blank">FACE RECOGNITION</a>'s datasets.
+                An objects detection neural network built with the YOLOv3 architecture.<br>
+                The model was made using keras then i've retrain the Yolo model's to detect faces using the <a href="http://vis-www.cs.umass.edu/fddb/index.html" target="_blank">Face Detection Data Set and Benchmark (FDDB)</a>'s datasets.
             </p>
         </div>
 
@@ -68,7 +68,26 @@
             <hr class="w3-round">
             <div class="w3-display-container">
                 <h3>Implementing Yolov3 in Keras</h3>
-                <p>First challenge was the reimplementation of Yolov3 in keras.</p>
+                <p>The first challenge was the reimplementation of Yolov3 in keras.</p>
+                <h3>Dataset conversion</h3>
+                <p>
+                    Then i needed to convert the FDDB annotations to the Darknet (Yolov3) format. <br>
+                    <code>
+                        &lt;IMAGE_PATH&gt;<br>
+                        &lt;NUMBER_OF_FACES&gt;<br>
+                        &lt;MAJOR_AXIS_RADIUS&gt; &lt;MINOR_AXIS_RADIUS&gt; &lt;ANGLE&gt; &lt;CENTER_X&gt; &lt;CENTER_Y&gt; &lt;SPLIT&gt; (for image 1)<br>
+                        &lt;MAJOR_AXIS_RADIUS&gt; &lt;MINOR_AXIS_RADIUS&gt; &lt;ANGLE&gt; &lt;CENTER_X&gt; &lt;CENTER_Y SPLIT&gt; (for image 2)<br>
+                    </code>
+                    to<br>
+                    <code>&lt;IMAGE_PATH&gt; &lt;CENTER_X&gt;,&lt;CENTER_Y&gt;,&lt;WIDTH&gt;,&lt;HEIGHT&gt;,&lt;CLASS&gt; (for image 1) &lt;CENTER_X&gt;,&lt;CENTER_Y&gt;,&lt;WIDTH&gt;,&lt;HEIGHT&gt;,&lt;CLASS&gt; (for image 2)</code>
+                </p>
+                <h3>Transfert Learning</h3>
+                <p>
+                    Using the weights file from Darknet, i've retrain the model to detect faces in images. <br>
+                    The dataset contains 5171 faces in a set of 2845 images. 
+                </p>
+                <h3>Onnx conversion</h3>
+                <p>To complete the process a convert my tensorflow/keras model to onnx.</p>
             </div>
         </div>
 
