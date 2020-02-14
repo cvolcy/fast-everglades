@@ -163,7 +163,7 @@ let app = new Vue({
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
                             var json = JSON.parse(xhr.responseText);
-                            res(json.results);
+                            res(json.prediction);
                         } else {
                             rej(JSON.parse(xhr.responseText))
                         }
