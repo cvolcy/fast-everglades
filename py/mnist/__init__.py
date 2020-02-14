@@ -1,47 +1,30 @@
-import os
 import json
 import azure.functions as func
-import onnxruntime as rt
 import numpy as np
-from azure.storage.file import FileService
-from datetime import datetime, timezone
+from ..shared import load_model, inference
 
 inference_session = None
 
-FILE_ACCOUNT_NAME = os.getenv('FILE_ACCOUNT_NAME')
-FILE_ACCOUNT_KEY = os.getenv('FILE_ACCOUNT_KEY')
-
 def main(req: func.HttpRequest, context: func.Context)  -> func.HttpResponse:
     sess = get_inference_session()
-
-    input_name = sess.get_inputs()[0].name
-    input_shape = sess.get_inputs()[0].shape
-    label_name = sess.get_outputs()[0].name
 
     data = req.params.get("data")
 
     if data is not None:
         try:
             data = json.loads(data)
-            data = np.argmax(sess.run([label_name], { input_name: np.array([data], dtype=np.float32) })[0], axis=1)
+            data = inference.predict(sess, np.array([data], dtype=np.float32))
+            data = np.argmax(data[0], axis=1)
             data = data.tolist()[0]
-        except JSONDecodeError:
-            data = null
+        except ValueError:
+            data = None
 
-    return func.HttpResponse(json.dumps({ 'input_name': input_name, 'input_shape': input_shape[1:], 'output_name': label_name, 'prediction': data, 'createdAt': datetime.now(timezone.utc).astimezone().isoformat() }, indent=4), status_code=200)
+    return func.HttpResponse(json.dumps(inference.format_results(sess, data), indent=4), status_code=200)
 
 def get_inference_session():
-    return _initialize()
-
-def _initialize():
     global inference_session
 
     if inference_session is None:
-        file_service = FileService(account_name=FILE_ACCOUNT_NAME, account_key=FILE_ACCOUNT_KEY)
-
-        onnx_file = file_service.get_file_to_bytes('models-share', 'mnist', 'mnist.onnx')
-        
-        print(f"Inference session initialized")
-        inference_session = rt.InferenceSession(onnx_file.content)
+        inference_session = load_model.initialize('mnist', 'mnist.onnx')
 
     return inference_session

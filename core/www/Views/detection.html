@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fast Everglades | Detection</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Detection/site.css">
+    <style>
+        .w3-main {
+            margin-left:340px;
+            margin-right:40px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navigation">
+
+        <!-- Sidebar/menu -->
+        <nav class="w3-sidebar w3-cyan w3-collapse w3-top w3-large w3-padding"
+            style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+            <a href="javascript:void(0)" @click="w3_close()" class="w3-button w3-hide-large w3-display-topleft w3-hover-light-blue"
+                style="width:100%;font-size:22px">Close
+                Menu</a>
+            <div class="w3-container">
+                <h3 class="w3-padding-64"><b>Fast<br>Everglades</b></h3>
+            </div>
+            <div class="w3-bar-block">
+                <a href="#" @click="w3_close()" class="w3-bar-item w3-button w3-hover-light-blue">Home</a>
+                <a href="#Overview" @click="w3_close()" class="w3-bar-item w3-button w3-hover-light-blue">Overview</a>
+                <a href="#Architecture" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-light-blue">Architecture</a>
+                <a href="#Demo" @click="w3_close()"
+                    class="w3-bar-item w3-button w3-hover-light-blue">Demo</a>
+            </div>
+        </nav>
+
+        <!-- Top menu on small screens -->
+        <header class="w3-container w3-top w3-hide-large w3-cyan w3-xlarge w3-padding">
+            <a href="javascript:void(0)" class="w3-button w3-cyan w3-hover-light-blue w3-margin-right" @click="w3_open()">☰</a>
+            <span>Vue.JS | Detection</span>
+        </header>
+
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div id="myOverlay" class="w3-overlay w3-hide-large"
+            @click="w3_close()" style="cursor:pointer" title="close side menu"></div>
+
+    </div>
+    <!-- !PAGE CONTENT! -->
+    <div id="app" class="w3-main">
+        <div id="Overview" class="w3-container" style="margin-top: 80px">
+            <h1 class="w3-jumbo" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><b>Detection</b></h1>
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Overview.</b></h2>
+            <hr class="w3-round">
+            <p>
+                An objects detection neural network built with the YOLOv3 architecture.<br>
+                The model was made using keras then i've retrain the Yolo model's to detect faces using the <a href="http://vis-www.cs.umass.edu/fddb/index.html" target="_blank">Face Detection Data Set and Benchmark (FDDB)</a>'s datasets.
+            </p>
+        </div>
+
+        <div id="Architecture" class="w3-container" style="margin-top: 80px">
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Architecture.</b></h2>
+            <hr class="w3-round">
+            <div class="w3-display-container">
+                <h3>Implementing Yolov3 in Keras</h3>
+                <p>The first challenge was the reimplementation of Yolov3 in keras.</p>
+                <h3>Dataset conversion</h3>
+                <p>
+                    Then i needed to convert the FDDB annotations to the Darknet (Yolov3) format. <br>
+                    <code>
+                        &lt;IMAGE_PATH&gt;<br>
+                        &lt;NUMBER_OF_FACES&gt;<br>
+                        &lt;MAJOR_AXIS_RADIUS&gt; &lt;MINOR_AXIS_RADIUS&gt; &lt;ANGLE&gt; &lt;CENTER_X&gt; &lt;CENTER_Y&gt; &lt;SPLIT&gt; (for image 1)<br>
+                        &lt;MAJOR_AXIS_RADIUS&gt; &lt;MINOR_AXIS_RADIUS&gt; &lt;ANGLE&gt; &lt;CENTER_X&gt; &lt;CENTER_Y SPLIT&gt; (for image 2)<br>
+                    </code>
+                    to<br>
+                    <code>&lt;IMAGE_PATH&gt; &lt;CENTER_X&gt;,&lt;CENTER_Y&gt;,&lt;WIDTH&gt;,&lt;HEIGHT&gt;,&lt;CLASS&gt; (for image 1) &lt;CENTER_X&gt;,&lt;CENTER_Y&gt;,&lt;WIDTH&gt;,&lt;HEIGHT&gt;,&lt;CLASS&gt; (for image 2)</code>
+                </p>
+                <h3>Transfert Learning</h3>
+                <p>
+                    Using the weights file from Darknet, i've retrain the model to detect faces in images. <br>
+                    The dataset contains 5171 faces in a set of 2845 images. 
+                </p>
+                <h3>Onnx conversion</h3>
+                <p>To complete the process a convert my tensorflow/keras model to onnx.</p>
+            </div>
+        </div>
+
+        <div id="Demo" class="w3-container" style="margin-top: 80px">
+            <h2 class="w3-xxxlarge w3-text-gray"><b>Demo.</b></h2>
+            <hr class="w3-round">
+            <div id="detection-demo">
+                <canvas id="my-canvas" width="400" height="400" style="max-width: 100%"></canvas>
+                <canvas id="detection-canvas" width="300" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/Detection/site.js"></script>
+</body>
+
+</html>
