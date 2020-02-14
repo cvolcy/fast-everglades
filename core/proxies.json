@@ -22,6 +22,13 @@
             },
             "backendUri": "https://localhost/api/staticFile?file=Views/emotions.html"
         },
+        "detection": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/detection"
+            },
+            "backendUri": "https://localhost/api/staticFile?file=Views/detection.html"
+        },
         "nodedate": {
             "matchCondition": {
                 "methods": [ "GET" ],
@@ -50,7 +57,7 @@
             },
             "backendUri": "https://fast-everglades-py.azurewebsites.net/api/cowsay"
         },
-        "detection": {
+        "pydetection": {
             "matchCondition": {
                 "methods": [ "POST", "OPTIONS" ],
                 "route": "/api/detection"
