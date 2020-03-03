@@ -156,7 +156,7 @@ let app = new Vue({
         loadData: function(image_url) {
             let detectionPromise = new Promise((res, rej) => {
                 var xhr = new XMLHttpRequest();
-                var url = "http://fast-everglades.azurewebsites.net/api/detection";
+                var url = "https://fast-everglades.azurewebsites.net/api/detection";
                 xhr.open("POST", url, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = function () {
