@@ -91,17 +91,30 @@
             </div>
         </div>
 
-        <div id="Demo" class="w3-container" style="margin-top: 80px">
+        <div id="Demo" class="w3-container" style="margin: 80px 0;">
             <h2 class="w3-xxxlarge w3-text-gray"><b>Demo.</b></h2>
             <hr class="w3-round">
             <div id="detection-demo">
-                <canvas id="my-canvas" width="400" height="400" style="max-width: 100%"></canvas>
-                <canvas id="detection-canvas" width="300" height="300"></canvas>
+                <p v-if="this.state == STATES.MOUNTED">
+                    <input type="file" @change="processFile($event)">
+                </p>
+                <div class="canvas-container" :class="{ 'canvas-container-loading': this.state == STATES.LOADING }">
+                    <div class="inference-container" v-if="this.state == STATES.LOADING">
+                        <p class="w3-center inference-spinner">
+                            <i class="fa fa-spinner fa-spin" style="font-size: 4em"></i><br>
+                            <span>Performing inference...</span>
+                        </p>
+                    </div>
+                    <canvas id="my-canvas" width="400" height="400" style="max-width: 100%"></canvas>
+                    <canvas id="detection-canvas" width="1" height="1"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-load-image/2.20.1/load-image.all.min.js"
+        integrity="sha256-CD8WcpNpYLkkXvLCShFHA25g5JZIS2506n0r7wIRUtM=" crossorigin="anonymous"></script>
     <script src="/Detection/site.js"></script>
 </body>
 
