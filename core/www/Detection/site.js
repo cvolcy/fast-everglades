@@ -76,11 +76,16 @@ class CrossHair {
 
 let app = new Vue({
     el: "#detection-demo",
-    data: function() {
+    data() {
         return {
             canvas: null,
             detectionCanvas: null,
-            drawingPool: []
+            drawingPool: [],
+            state: 0,
+            STATES: {
+                MOUNTED: 0,
+                LOADING: 1
+            }
         }
     },
     mounted() {
@@ -100,38 +105,11 @@ let app = new Vue({
                 element.draw({ mouse: { x: x, y: y }});
             });
         };
-
-        this.loadImage();
     },
     methods: {
-        loadImage: function() {
+        drawBoxes: function(data) {
             const $context = this;
 
-            let img1 = new Image();
-            img1.crossOrigin = "Anonymous";
-
-            img1.onload = function () {
-
-                const canvasWidth = $context.canvas.width;
-                const canvasHeight = $context.canvas.height;
-                
-                const largerSide = img1.width > img1.height ? img1.width : img1.height;
-                const w = canvasWidth * img1.width / largerSide;
-                const h = canvasHeight * img1.height / largerSide;
-
-                const ctx = $context.canvas.getContext('2d');
-
-                let image = new DrawableImage(ctx, img1, Math.floor((canvasWidth-w)/2), Math.floor((canvasHeight-h)/2), w, h);
-                image.draw();
-                $context.drawingPool.push(image);
-                $context.drawBoxes(ctx, Math.floor((canvasWidth-w)/2), Math.floor((canvasHeight-h)/2), w / img1.width, h / img1.height);
-            };
-
-            img1.src = 'https://d3jh33bzyw1wep.cloudfront.net/s3/W1siZiIsIjIwMTkvMDQvMjQvMTAvNTgvNDEvOTkxL2xldCBtZSB0YWtlIGEgc2VsZmllLmpwZyJdLFsicCIsInRodW1iIiwiMjgweDI4MFx1MDAzYyJdXQ';
-        },
-        drawBoxes: async function() {
-            const $context = this;
-            let data = await this.loadData(this.canvas.toDataURL());
             const ctx = $context.canvas.getContext('2d');
             const detectCtx = $context.detectionCanvas.getContext('2d');
 
@@ -174,7 +152,38 @@ let app = new Vue({
             });
 
             return detectionPromise;
-        }
+        },
+        processFile(e) {
+            if (!e.target.files.length) return;
+
+            const ctx = this.canvas.getContext('2d');
+            const detectionCtx = this.detectionCanvas.getContext('2d');
+
+            loadImage(
+                e.target.files[0],
+                async (img) => {
+                    this.drawingPool.length = 0;
+                    ctx.canvas.width = img.width;
+                    ctx.canvas.height = img.height;
+
+                    ctx.drawImage(img, 0, 0);
+                    const { data } = ctx.getImageData(0, 0, img.width, img.height);
+
+                    let image = new DrawableImage(ctx, img, 0, 0, img.width, img.height);
+                    image.draw();
+                    this.drawingPool.push(image);
+
+                    this.state = this.STATES.LOADING;
+
+                    let results = await this.loadData(this.canvas.toDataURL());
+
+                    this.state = this.STATES.MOUNTED;
+
+                    this.drawBoxes(results);
+                },
+                { maxWidth: 400, maxHeight: 400, cover: false, crop: false, canvas: true }
+            );
+        },
     }
 });
 
