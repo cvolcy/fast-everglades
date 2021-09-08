@@ -9,4 +9,4 @@ azure-storage-file==2.1.0
 cowpy==1.1.0
 numpy==1.16.4
 onnxruntime==1.1.1
-Pillow==8.1.1
+Pillow==8.3.2
