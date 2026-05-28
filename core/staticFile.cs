@@ -49,6 +49,47 @@ namespace fast_everglades
             }
         }
 
+        [Function("root")]
+        public IActionResult Root(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/")]
+            HttpRequest req)
+        {
+            return new RedirectResult("/api/staticFile?file=Views/index.html");
+        }
+
+        [Function("bring-umbrella")]
+        public IActionResult BringUmbrella(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/bring-umbrella")]
+            HttpRequest req)
+        {
+            return new RedirectResult("/api/staticFile?file=Views/umbrella.html");
+        }
+
+        [Function("emotion-recognition")]
+        public IActionResult EmotionRecognition(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/emotion-recognition")]
+            HttpRequest req)
+        {
+            return new RedirectResult("/api/staticFile?file=Views/emotions.html");
+        }
+
+        [Function("detection")]
+        public IActionResult Detection(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/detection")]
+            HttpRequest req)
+        {
+            return new RedirectResult("/api/staticFile?file=Views/detection.html");
+        }
+
+        [Function("files")]
+        public IActionResult Files(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "{*path}")]
+            HttpRequest req,
+            string path)
+        {
+            return new RedirectResult($"/api/staticFile?file={path}");
+        }
+
         private static string GetEnvironmentVariable(string name) =>
             Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process) ?? string.Empty;
 
