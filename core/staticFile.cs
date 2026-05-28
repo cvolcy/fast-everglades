@@ -1,19 +1,14 @@
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
 using MimeTypes;
+using System.Net;
 
 namespace fast_everglades
 {
     public class StaticFile
     {
         public static readonly string STATIC_FILES_FOLDER = "www";
-        public static readonly string DEFAULT_PAGE = string.IsNullOrEmpty(GetEnvironmentVariable("DEFAULT_PAGE")) ? 
+        public static readonly string DEFAULT_PAGE = string.IsNullOrEmpty(GetEnvironmentVariable("DEFAULT_PAGE")) ?
                 "index.html" : GetEnvironmentVariable("DEFAULT_PAGE");
 
         private readonly ILogger<StaticFile> _logger;
@@ -25,27 +20,12 @@ namespace fast_everglades
 
         [Function("staticFile")]
         public HttpResponseData Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api/staticFile")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
-            _logger.LogInformation("Rendering Static File");
 
-            try
-            {
-                var filePath = GetFilePath(req);
-
-                _logger.LogInformation("Rendering static file for {filePath}", filePath);
-
-                var response = req.CreateResponse(HttpStatusCode.OK);
-                var stream = new FileStream(filePath, FileMode.Open);
-                response.Body = stream;
-                response.Headers.Add("Content-Type", GetMimeType(filePath));
-                return response;
-            }
-            catch
-            {
-                return req.CreateResponse(HttpStatusCode.NotFound);
-            }
+            var filePath = GetFilePath(req);
+            return ServeStaticFile(req, filePath);
         }
 
         [Function("root")]
@@ -53,78 +33,63 @@ namespace fast_everglades
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/")]
             HttpRequestData req)
         {
-            var response = req.CreateResponse(HttpStatusCode.Redirect);
+            _logger.LogInformation("Serving index.html directly from root.");
 
-            response.Headers.Add(
-                "Location",
-                "/api/staticFile?file=Views/index.html");
-
-            return response;
+            var filePath = GetFilePath(req, "Views/index.html");
+            return ServeStaticFile(req, filePath);
         }
 
-        [Function("bring-umbrella")]
+        [Function("bringumbrella")]
         public HttpResponseData BringUmbrella(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/bring-umbrella")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "bring-umbrella")]
             HttpRequestData req)
         {
-            var response = req.CreateResponse(HttpStatusCode.Redirect);
+            _logger.LogInformation("Serving umbrella.html directly from bringumbrella.");
 
-            response.Headers.Add(
-                "Location",
-                "/api/staticFile?file=Views/umbrella.html");
-
-            return response;
+            var filePath = GetFilePath(req, "Views/umbrella.html");
+            return ServeStaticFile(req, filePath);
         }
 
-        [Function("emotion-recognition")]
+        [Function("emotionrecognition")]
         public HttpResponseData EmotionRecognition(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/emotion-recognition")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "emotion-recognition")]
             HttpRequestData req)
         {
-            var response = req.CreateResponse(HttpStatusCode.Redirect);
+            _logger.LogInformation("Serving emotions.html directly from emotionrecognition.");
 
-            response.Headers.Add(
-                "Location",
-                "/api/staticFile?file=Views/emotions.html");
-
-            return response;
+            var filePath = GetFilePath(req, "Views/emotions.html");
+            return ServeStaticFile(req, filePath);
         }
 
         [Function("detection")]
         public HttpResponseData Detection(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/detection")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "detection")]
             HttpRequestData req)
         {
-            var response = req.CreateResponse(HttpStatusCode.Redirect);
+            _logger.LogInformation("Serving detection.html directly from detection.");
 
-            response.Headers.Add(
-                "Location",
-                "/api/staticFile?file=Views/detection.html");
-
-            return response;
+            var filePath = GetFilePath(req, "Views/detection.html");
+            return ServeStaticFile(req, filePath);
         }
 
-        [Function("files")]
+        [Function("zfiles")]
         public HttpResponseData Files(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "{*path}")]
             HttpRequestData req,
             string path)
         {
-            var response = req.CreateResponse(HttpStatusCode.Redirect);
-
-            response.Headers.Add(
-                "Location",
-                $"/api/staticFile?file={path}");
-
-            return response;
+            var filePath = GetFilePath(req, path);
+            return ServeStaticFile(req, filePath);
         }
 
         private static string GetEnvironmentVariable(string name) =>
             Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process) ?? string.Empty;
 
-        private static string GetFilePath(HttpRequestData req)
+        private static string GetFilePath(HttpRequestData req, string forcePath = "")
         {
-            var path = req.Query.GetValues("file")?.FirstOrDefault();
+            var path = string.IsNullOrEmpty(forcePath)
+                ? req.Query.GetValues("file")?.FirstOrDefault()
+                : forcePath;
 
             if (string.IsNullOrEmpty(path))
             {
@@ -172,6 +137,26 @@ namespace fast_everglades
         {
             var fileInfo = new FileInfo(filePath);
             return MimeTypeMap.GetMimeType(fileInfo.Extension);
+        }
+
+        private HttpResponseData ServeStaticFile(HttpRequestData req, string filePath)
+        {
+            try
+            {
+                _logger.LogInformation("Rendering static file for {filePath}", filePath);
+
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+                response.Body = stream;
+                response.Headers.Add("Content-Type", GetMimeType(filePath));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error serving file {filePath}", filePath);
+                return req.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
     }
 }

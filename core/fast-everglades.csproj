@@ -6,6 +6,7 @@
     <RootNamespace>fast_everglades</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<FunctionsEnableWorkerIndexing>False</FunctionsEnableWorkerIndexing>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediaTypeMap" Version="2.1.0" />
