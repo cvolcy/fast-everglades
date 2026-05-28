@@ -51,11 +51,15 @@ namespace fast_everglades
 
         private HttpResponseData BuildRedirect(HttpRequestData req, string targetUrl)
         {
-            _logger.LogInformation("Redirecting request to: {targetUrl}", targetUrl);
+            string queryString = req.Url.Query; 
+            
+            string destinationWithQuery = targetUrl + queryString;
 
-            var response = req.CreateResponse(HttpStatusCode.Redirect);
-            response.Headers.Add("Location", targetUrl);
-
+            _logger.LogInformation("Redirecting request to: {destinationWithQuery}", destinationWithQuery);
+            
+            var response = req.CreateResponse(HttpStatusCode.RedirectKeepVerb);
+            response.Headers.Add("Location", destinationWithQuery);
+            
             return response;
         }
     }
