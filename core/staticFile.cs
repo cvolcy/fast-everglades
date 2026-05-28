@@ -25,17 +25,16 @@ namespace fast_everglades
 
         [Function("staticFile")]
         public HttpResponseData Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req,
-            FunctionContext context)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             _logger.LogInformation("Rendering Static File");
 
             try
             {
-                var filePath = GetFilePath(req, context);
+                var filePath = GetFilePath(req);
 
-                _logger.LogInformation($"Rendering static file for {filePath}");
+                _logger.LogInformation("Rendering static file for {filePath}", filePath);
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
                 var stream = new FileStream(filePath, FileMode.Open);
@@ -50,59 +49,89 @@ namespace fast_everglades
         }
 
         [Function("root")]
-        public IActionResult Root(
+        public HttpResponseData Root(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/")]
-            HttpRequest req)
+            HttpRequestData req)
         {
-            return new RedirectResult("/api/staticFile?file=Views/index.html");
+            var response = req.CreateResponse(HttpStatusCode.Redirect);
+
+            response.Headers.Add(
+                "Location",
+                "/api/staticFile?file=Views/index.html");
+
+            return response;
         }
 
         [Function("bring-umbrella")]
-        public IActionResult BringUmbrella(
+        public HttpResponseData BringUmbrella(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/bring-umbrella")]
-            HttpRequest req)
+            HttpRequestData req)
         {
-            return new RedirectResult("/api/staticFile?file=Views/umbrella.html");
+            var response = req.CreateResponse(HttpStatusCode.Redirect);
+
+            response.Headers.Add(
+                "Location",
+                "/api/staticFile?file=Views/umbrella.html");
+
+            return response;
         }
 
         [Function("emotion-recognition")]
-        public IActionResult EmotionRecognition(
+        public HttpResponseData EmotionRecognition(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/emotion-recognition")]
-            HttpRequest req)
+            HttpRequestData req)
         {
-            return new RedirectResult("/api/staticFile?file=Views/emotions.html");
+            var response = req.CreateResponse(HttpStatusCode.Redirect);
+
+            response.Headers.Add(
+                "Location",
+                "/api/staticFile?file=Views/emotions.html");
+
+            return response;
         }
 
         [Function("detection")]
-        public IActionResult Detection(
+        public HttpResponseData Detection(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/detection")]
-            HttpRequest req)
+            HttpRequestData req)
         {
-            return new RedirectResult("/api/staticFile?file=Views/detection.html");
+            var response = req.CreateResponse(HttpStatusCode.Redirect);
+
+            response.Headers.Add(
+                "Location",
+                "/api/staticFile?file=Views/detection.html");
+
+            return response;
         }
 
         [Function("files")]
-        public IActionResult Files(
+        public HttpResponseData Files(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "{*path}")]
-            HttpRequest req,
+            HttpRequestData req,
             string path)
         {
-            return new RedirectResult($"/api/staticFile?file={path}");
+            var response = req.CreateResponse(HttpStatusCode.Redirect);
+
+            response.Headers.Add(
+                "Location",
+                $"/api/staticFile?file={path}");
+
+            return response;
         }
 
         private static string GetEnvironmentVariable(string name) =>
             Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process) ?? string.Empty;
 
-        private static string GetFilePath(HttpRequestData req, FunctionContext context)
+        private static string GetFilePath(HttpRequestData req)
         {
-            var path = req.Query.ContainsKey("file") ? req.Query["file"] : null;
+            var path = req.Query.GetValues("file")?.FirstOrDefault();
 
             if (string.IsNullOrEmpty(path))
             {
                 throw new ArgumentException("Missing file parameter");
             }
 
-            var functionAppDirectory = context.FunctionDefinition.Properties["functionAppDirectory"].ToString();
+            var functionAppDirectory = AppContext.BaseDirectory;
             var staticFilesPath =
                 Path.GetFullPath(Path.Combine(functionAppDirectory, STATIC_FILES_FOLDER));
             var fullPath = Path.GetFullPath(Path.Combine(staticFilesPath, path));
