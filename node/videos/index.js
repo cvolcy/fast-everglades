@@ -41,13 +41,13 @@ module.exports = async function (context, req) {
     
     const Videos = mongoose.model("Videos");
     const videoDocs = await Videos.find();
+    const localizedVideos = videoDocs.map((video) => video.localize(lang));
     const count = await Videos.countDocuments();
-    console.log(videoDocs, count);
 
     context.res = {
         headers:  {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({videos: videoDocs.map((video) => video.localize(lang)), count}, null, 3)
+        body: JSON.stringify({videos: localizedVideos, count}, null, 3)
     };
 };
