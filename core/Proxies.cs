@@ -20,21 +20,21 @@ namespace fast_everglades
 
         [Function("Proxy_NodeDate")]
         public async Task<HttpResponseData> ProxyNodeDate(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "date")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api/date")] HttpRequestData req)
         {
             return await ForwardRequest(req, "https://fast-everglades-node.azurewebsites.net/api/date");
         }
 
         [Function("Proxy_NodeVideos")]
         public async Task<HttpResponseData> ProxyNodeVideos(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "videos")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api/videos")] HttpRequestData req)
         {
             return await ForwardRequest(req, "https://fast-everglades-node.azurewebsites.net/api/videos");
         }
 
         [Function("Proxy_NodeGraphQL")]
         public async Task<HttpResponseData> ProxyNodeGraphQL(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "graphql")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "api/graphql")] HttpRequestData req)
         {
             return await ForwardRequest(req, "https://fast-everglades-node.azurewebsites.net/api/graphql");
         }
@@ -45,14 +45,14 @@ namespace fast_everglades
 
         [Function("Proxy_PyCowsay")]
         public async Task<HttpResponseData> ProxyPyCowsay(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "cowsay")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api/cowsay")] HttpRequestData req)
         {
             return await ForwardRequest(req, "https://fast-everglades-py.azurewebsites.net/api/cowsay");
         }
 
         [Function("Proxy_PyDetection")]
         public async Task<HttpResponseData> ProxyPyDetection(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", "options", Route = "detection")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", "options", Route = "api/detection")] HttpRequestData req)
         {
             return await ForwardRequest(req, "https://fast-everglades-py.azurewebsites.net/api/detection");
         }
