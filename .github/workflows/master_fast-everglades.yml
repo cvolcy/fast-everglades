@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy dotnet core app to Azure Function App - fast-everglades
+name: Build and deploy dotnet core project to Azure Function App - fast-everglades
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -30,8 +30,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: 'Resolve Project Dependencies Using Dotnet'
-        working-directory: core
-        shell: pwsh
+        shell: bash
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
@@ -40,9 +39,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0DC24B2D941944089554B9F17AB60373 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0C1FA1E28A3F4F188A2058CDF985C4BB }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B6ABD8ED19254C72B4D16C1AFF2A1377 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CA95392DB64246C484C69C95D08A3E9C }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CA0816B247AB402EBF4B8B7206181D09 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_118D36550B9447A9B3DCFE68CD82DB33 }}
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
@@ -50,5 +49,5 @@ jobs:
         with:
           app-name: 'fast-everglades'
           slot-name: 'Production'
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/core/output'
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
           
