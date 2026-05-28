@@ -31,7 +31,7 @@ videosSchema.methods.localize = function(locale) {
 mongoose.model('Videos', videosSchema);
 
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.', process.env.MONGODB_URI);
+    context.log('JavaScript HTTP trigger function processed a request.');
 
     const lang = "en";
 
@@ -40,12 +40,14 @@ module.exports = async function (context, req) {
     }
     
     const Videos = mongoose.model("Videos");
+    const videoDocs = await Videos.find();
     const count = await Videos.countDocuments();
+    console.log(videoDocs, count);
 
     context.res = {
         headers:  {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({videos: (await Videos.find()).map((video) => video.localize(lang)), count}, null, 3)
+        body: JSON.stringify({videos: videoDocs.map((video) => video.localize(lang)), count}, null, 3)
     };
 };
