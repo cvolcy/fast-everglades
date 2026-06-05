@@ -1,300 +1,494 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" id="html-root">
 
 <head>
-    <title>Fast Everglades</title>
+    <title>Clervens Volcy — Senior Software Engineer</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <style>
-        pre {
-            overflow-x: auto;
-            white-space: pre-wrap;
-            white-space: -moz-pre-wrap;
-            white-space: -pre-wrap;
-            white-space: -o-pre-wrap;
-            word-wrap: break-word;
-        }
-
-        body,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: "Raleway", sans-serif
-        }
-
-        .project {
-            height: 280px;
-            opacity: .99;
-        }
-
-        .project-title {
-        }
-
-        .project-description {
-            text-align: justify;
-            flex: 2;
-        }
-
-        .project-footer {
-            flex: 1;
-        }
-
-        .project-hero {
-            width: 100%;
-            height: 100%;
-            min-width: 100%;
-            min-height: 100%;
-            position: relative;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-hero-background {
-            background-size: cover;
-            background-position: center;
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            opacity: 0.4;
-        }
-        @media (max-width: 992px) {
-            footer {
-                margin-left: 0!important;
-                margin-right: 0!important;
+    <meta name="description" content="Senior Software Engineer portfolio — Clervens Volcy, Montréal">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50:  '#f0f0ff',
+                            100: '#e0e0ff',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        cyan: {
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        }
+                    }
+                }
             }
         }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        /* ── Base ── */
+        [v-cloak] { display: none; }
+        html { scroll-behavior: smooth; }
+
+        /* ── Aurora hero background ── */
+        .aurora-bg {
+            background: #0d0d1a;
+            position: relative;
+            overflow: hidden;
+        }
+        .aurora-bg::before, .aurora-bg::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.35;
+            animation: drift 12s ease-in-out infinite alternate;
+        }
+        .aurora-bg::before {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, #7c3aed, transparent 70%);
+            top: -200px; left: -150px;
+        }
+        .aurora-bg::after {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #06b6d4, transparent 70%);
+            bottom: -150px; right: -100px;
+            animation-delay: -6s;
+        }
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(40px, 30px) scale(1.08); }
+        }
+        .light-hero {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 40%, #cffafe 100%);
+        }
+
+        /* ── Glassmorphism ── */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(14px) saturate(150%);
+            -webkit-backdrop-filter: blur(14px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 32px rgba(139, 92, 246, 0.18), 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(14px) saturate(160%);
+            -webkit-backdrop-filter: blur(14px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card-light:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 0 32px rgba(124, 58, 237, 0.15), 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        /* ── Gradient text ── */
+        .grad-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .grad-text-light {
+            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Glow button ── */
+        .btn-glow {
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.45);
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 38px rgba(124, 58, 237, 0.7), 0 0 18px rgba(6, 182, 212, 0.4);
+            transform: translateY(-1px);
+        }
+        .btn-outline-glow {
+            border: 1.5px solid rgba(139, 92, 246, 0.6);
+            color: #a78bfa;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-glow:hover {
+            background: rgba(139, 92, 246, 0.12);
+            border-color: #a78bfa;
+            box-shadow: 0 0 18px rgba(139, 92, 246, 0.3);
+        }
+
+        /* ── Nav link underline ── */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #06b6d4);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Skill bar ── */
+        .skill-bar {
+            background: linear-gradient(90deg, #7c3aed, #06b6d4);
+            transition: width 1.2s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ── Tag buttons ── */
+        .tag-btn { transition: all 0.2s ease; }
+
+        /* ── Orb decorations ── */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(72px);
+            pointer-events: none;
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0d0d1a; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 3px; }
     </style>
 </head>
 
-<body class="w3-content w3-light-grey" style="max-width:100%">
+<body id="app" class="font-sans bg-gray-50 text-gray-900 dark:bg-[#0d0d1a] dark:text-gray-100 transition-colors duration-300" v-cloak>
 
-    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center"
-        style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
-        <h3 class="w3-padding-64 w3-center"><b>Fast<br>Everglades</b></h3>
-        <a href="javascript:void(0)" onclick="w3_close()"
-            class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
-        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">PORTFOLIO</a>
-        <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">ABOUT ME</a>
-        <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
-    </nav>
-
-    <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
-        <span class="w3-left w3-padding">Fast Everglades</span>
-        <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+    <!-- ── NAVBAR ── -->
+    <header :class="darkMode ? 'glass' : 'glass-light'" class="fixed top-0 inset-x-0 z-50 border-b border-white/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" :class="darkMode ? 'grad-text' : 'grad-text-light'" class="text-xl font-extrabold tracking-tight">
+                &lt;CV /&gt;
+            </a>
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#projects" class="nav-link text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Projects</a>
+                <a href="#about" class="nav-link text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">About</a>
+                <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Contact</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <!-- Dark mode toggle -->
+                <button @click="toggleDark" aria-label="Toggle dark mode"
+                    :class="darkMode ? 'glass text-violet-300' : 'glass-light text-violet-700'"
+                    class="p-2 rounded-xl hover:scale-105 transition-all">
+                    <i :class="darkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+                </button>
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden p-2 rounded-xl" aria-label="Menu">
+                    <i :class="[mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars', darkMode ? 'text-violet-300' : 'text-violet-700']"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Nav -->
+        <div v-show="mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden border-t border-white/20 px-4 py-4 flex flex-col gap-4 text-sm font-medium">
+            <a href="#projects" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Projects</a>
+            <a href="#about" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">About</a>
+            <a href="#contact" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Contact</a>
+        </div>
     </header>
 
-    <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+    <!-- ── HERO ── -->
+    <section :class="darkMode ? 'aurora-bg' : 'light-hero'" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 pb-12 overflow-hidden">
+        <!-- Light mode orbs -->
+        <div v-show="!darkMode" class="orb w-96 h-96 bg-violet-200 top-[-4rem] left-[-4rem] opacity-60"></div>
+        <div v-show="!darkMode" class="orb w-80 h-80 bg-cyan-200 bottom-[-3rem] right-[-3rem] opacity-50"></div>
+        <!-- Content card -->
+        <div :class="darkMode ? 'glass' : 'glass-light'" class="relative z-10 max-w-3xl mx-auto rounded-3xl px-8 py-12 shadow-2xl">
+            <img src="/Images/avatar.png" alt="Clervens Volcy"
+                class="w-28 h-28 rounded-full object-cover mx-auto mb-6 border-4 border-violet-500 shadow-[0_0_30px_rgba(124,58,237,0.5)]">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Senior Software Engineer</p>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 text-gray-900 dark:text-white">
+                Hi, I'm <span :class="darkMode ? 'grad-text' : 'grad-text-light'">Clervens Volcy</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto mb-8">
+                Building intelligent, cloud-native web applications — Montréal, Canada.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="#projects" class="btn-glow px-6 py-3 text-white font-semibold rounded-full">
+                    View My Work
+                </a>
+                <a href="#contact" class="btn-outline-glow px-6 py-3 font-semibold rounded-full">
+                    Get in Touch
+                </a>
+            </div>
+            <div class="flex justify-center gap-5 mt-8 text-gray-500 dark:text-gray-400 text-xl">
+                <a href="https://www.linkedin.com/in/clervens-volcy-5522a670/" target="_blank"
+                    class="hover:text-violet-600 dark:hover:text-violet-300 transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:clervens.volcy@gmail.com"
+                    class="hover:text-violet-600 dark:hover:text-violet-300 transition-colors"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
 
-    <div class="w3-main" style="margin-left: 300px;">
-        <!-- Push down content on small screens -->
-        <div class="w3-hide-large" style="margin-top:83px"></div>
-        <div class="projects">
-            <div class="project w3-col s12 m4 l3 w3-cyan">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://cvolcy.s3.amazonaws.com/uploads/2020/02/file0001655960310-2.jpg"></div>
-                    <h4 class="project-title">Detection <i class="fab fa-vuejs" title="VueJS"></i> <i class="fab fa-python" title="Python"></i></h4>
-                    <div class="project-description">
-                        <p>An objects detection neural network built with the YOLOv3 architecture.</p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/detection">Demo Here</a></p>
-                    </div>
-                </div>
+    <!-- ── PROJECTS ── -->
+    <section id="projects" class="py-20 px-4 bg-white dark:bg-[#0f0f1e] relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Portfolio</p>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Featured Projects</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">A collection of experiments, side projects and demos built on the Azure cloud platform.</p>
             </div>
-            <div class="project w3-col s12 m4 l3 w3-yellow">
-                <div class="project-hero">
-                    <div class="project-hero-background" style="opacity: 0.35"
-                        data-background="https://cvolcy.s3.amazonaws.com/uploads/2019/09/fff30993c11dbcd527755767eca3bb213.jpg"></div>
-                    <h4 class="project-title">Minesweeper <i class="fab fa-vuejs" title="VueJS"></i> <i class="fab fa-html5" title="HTML 5"></i></h4>
-                    <div class="project-description">
-                        <p>A minesweeper clone, built in using Vuejs and canvas.</p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/Views/minesweeper.html">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="project w3-col s12 m4 l3 w3-dark-grey">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/e9262c3d9263ee9b1243f1b0cf58a857.jpg"></div>
-                    <h4 class="project-title">Emotion recognition <i class="fab fa-vuejs" title="VueJS"></i> <i class="fab fa-node-js" title="NodeJS"></i></h4>
-                    <div class="project-description">
-                        <p>Real time emotion recognition using client side inference model. The model is using an
-                            enhanced version of FER emotion dataset called FER+.</p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/emotion-recognition">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="project w3-col s12 m4 l3 w3-pink">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/0001279117911.jpg"></div>
-                    <h4 class="project-title">GraphQL <i class="fab fa-node-js" title="NodeJS"></i></h4>
-                    <div class="project-description">
-                        <p>A simple lambda in nodejs that return the informations about the current date and time of the server.</p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/api/graphql?query={videos(lang:%22fr%22){title%20url}}">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="project w3-col s12 m4 l3 w3-green">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/aa4c1b80ea25d9d1230967b5347d65602.jpg"></div>
-                    <h4 class="project-title">Cowsay <i class="fab fa-python" title="Python"></i></h4>
-                    <div class="project-description">
-                        <p>A lambda function in python that render a cow in ASCII art with a message
-                            You can update the message by setting the message query string parameter in the url.
-                           <br> Exemple : <a href="/api/cowsay?message=Hello%20Boi">Message = 'Hello Boi'</a></p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/api/cowsay?message=Hello%20Boi">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="project w3-col s12 m4 l3 w3-purple">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/04/77153e213c2273d4b08b82ad881b66a4.jpg">
-                    </div>
-                    <h4 class="project-title">Bring Umbrella <i class="fab fa-vuejs" title="VueJS"></i> <i class="fab fa-node-js" title="NodeJS"></i></h4>
-                    <div class="project-description">
-                        A simple progressive web app that telling you if you should bring your umbrella for the current day.
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/Umbrella/">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="project w3-col s12 m4 l3 w3-teal">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/dfc3a12f93431b141d2cf03f0fe5c65d.jpg"></div>
-                    <h4 class="project-title">Date <i class="fab fa-node-js" title="NodeJS"></i></h4>
-                    <div class="project-description">
-                        <p>A simple lambda in nodejs that return the informations about the current date and time of the server.</p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/api/date">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="project w3-col s12 m4 l3 w3-deep-orange">
-                <div class="project-hero">
-                    <div class="project-hero-background"
-                        data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/dwarf_mongoose2.jpg"></div>
-                    <h4 class="project-title">Videos <i class="fab fa-node-js" title="NodeJS"></i></h4>
-                    <div class="project-description">
-                        <p>A lambda function in nodejs using mongoose the fetch data about the available videos in the database.</p>
-                    </div>
-                    <div class="project-footer">
-                        <p><a href="/api/videos">Demo Here</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About Me -->
-        <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32">
-            <h4 id="about"><b>About Me</b></h4>
-            <img src="/Images/avatar.png" alt="Me" class="w3-image w3-padding-32 w3-circle" width="600" height="650">
-            <div class="w3-content w3-justify" style="max-width:600px">
-                <h4>
-                    I'm Clervens Volcy,<br>a programmer from Montréal
-                </h4>
-                <p>
-                    Software Engineer bachelor with a keen interest in solving problems, Web technologies, machine learning and
-                    artificial intelligence.
-                </p>
-                <p>
-                    The Fast Everglades project acts as a monorepo for the multiple tests and side projects i'm doing with the Azure
-                    cloud platform.
-                </p>
-                <!-- <hr class="w3-opacity">
-                <h4 class="w3-padding-16">Technical Skills</h4>
-                <p class="w3-wide">Photography</p>
-                <div class="w3-white">
-                    <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
-                </div>
-                <p><button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">Download Resume</button></p> -->
-                <hr class="w3-opacity">
-            </div>
-        </div>
-        <!-- Contact -->
-        <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="contact">
-            <h4><b>Contact</b></h4>
-            <div class="w3-content w3-justify" style="max-width:600px">
-                <p>You can contact me via <a href="mailto:clervens.volcy@gmail.com">email</a> or <a href="https://www.linkedin.com/in/clervens-volcy-5522a670/">LinkedIn <i class="fab fa-linkedin"></i></a></p>
-            </div>
-        </div>
-    </div>
 
-    <footer class="w3-container w3-padding-32 w3-grey">
-        <div class="w3-row-padding">
-            <div class="w3-col s12 m4 l3"></div>
-            <div class="w3-col s12 m4 l3"></div>
-            <div class="w3-col s12 m4 l3"></div>
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button v-for="tag in allTags" :key="tag"
+                    @click="activeFilter = tag"
+                    :class="[
+                        'tag-btn px-4 py-1.5 rounded-full text-sm font-medium border transition-all',
+                        activeFilter === tag
+                            ? 'btn-glow text-white border-transparent'
+                            : (darkMode ? 'glass border-white/10 text-gray-300 hover:text-violet-300' : 'glass-light border-white/40 text-gray-600 hover:text-violet-600') + ' hover:border-violet-400'
+                    ]">
+                    {{ tag }}
+                </button>
+            </div>
+
+            <!-- Project Grid -->
+            <transition-group name="fade" tag="div" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div v-for="project in filteredProjects" :key="project.title"
+                    :class="darkMode ? 'glass-card' : 'glass-card-light'"
+                    class="group relative flex flex-col rounded-2xl overflow-hidden">
+                    <!-- Image -->
+                    <div class="relative h-44 overflow-hidden bg-gray-200 dark:bg-gray-700">
+                        <img v-if="project.image" :src="project.image" :alt="project.title"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <!-- Tech badges on image -->
+                        <div class="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                            <span v-for="tech in project.tech" :key="tech"
+                                class="text-xs px-2 py-0.5 rounded-full bg-black/40 text-white backdrop-blur-sm font-medium">
+                                {{ tech }}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex flex-col flex-1 p-5">
+                        <h3 class="font-bold text-base mb-2 text-gray-900 dark:text-gray-100">{{ project.title }}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 flex-1 leading-relaxed">{{ project.description }}</p>
+                        <a :href="project.link"
+                            class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-violet-600 dark:text-violet-300 hover:gap-3 transition-all">
+                            View Demo <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </transition-group>
+
+            <p v-if="filteredProjects.length === 0" class="text-center text-gray-400 mt-10 py-12">No projects match this filter.</p>
         </div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section id="about" class="py-20 px-4 bg-gray-50 dark:bg-[#0d0d1a] relative overflow-hidden">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">About Me</p>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Passionate about <br>code &amp; craft.</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                    Software Engineer with a bachelor's degree and a keen interest in solving complex problems, Web technologies, machine learning and artificial intelligence.
+                </p>
+                <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                    The Fast Everglades project acts as a monorepo for the multiple tests and side projects I'm doing with the Azure cloud platform.
+                </p>
+                <div class="space-y-4">
+                    <div v-for="skill in skills" :key="skill.name">
+                        <div class="flex justify-between text-sm font-medium mb-1">
+                            <span class="text-gray-700 dark:text-gray-300">{{ skill.name }}</span>
+                            <span class="text-violet-600 dark:text-violet-300">{{ skill.level }}%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full skill-bar" :style="{ width: skill.level + '%' }"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="relative">
+                    <div :class="darkMode ? 'glass' : 'glass-light'" class="absolute -inset-4 rounded-3xl rotate-3"></div>
+                    <div class="absolute -inset-6 rounded-3xl -rotate-2" style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(6,182,212,0.12));filter:blur(2px)"></div>
+                    <img src="/Images/avatar.png" alt="Clervens Volcy"
+                        class="relative w-72 h-72 rounded-2xl object-cover shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact" class="py-20 px-4 bg-white dark:bg-[#0f0f1e] relative overflow-hidden">
+        <div class="max-w-2xl mx-auto text-center">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Contact</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Let's work together.</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-10">Have a project in mind or just want to say hi? My inbox is always open.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="mailto:clervens.volcy@gmail.com"
+                    class="btn-glow inline-flex items-center justify-center gap-2 px-6 py-3 text-white font-semibold rounded-full">
+                    <i class="fas fa-envelope"></i> Say Hello
+                </a>
+                <a href="https://www.linkedin.com/in/clervens-volcy-5522a670/" target="_blank"
+                    class="btn-outline-glow inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-full">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="py-8 px-4 text-center text-sm text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-[#0a0a14] border-t border-gray-200 dark:border-white/10">
+        <p>© <span id="year"></span> Clervens Volcy — Built with Vue.js &amp; Tailwind CSS</p>
     </footer>
-    <!-- Footer -->
-    <footer class="w3-container w3-black w3-padding-16"
-        style="position: fixed; width: 100%; bottom: 0; margin-left: 300px;">
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </footer>
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const largeToAdd = (4 - (document.querySelectorAll(".project").length % 4)) % 4;
-            const medToAdd = (3 - (document.querySelectorAll(".project").length % 3)) % 3;
-            const main = document.querySelector(".projects");
-            
-            // Add filling for large screens
-            for (let index = 0; index < largeToAdd; index++) {
-                let doc = new DOMParser().parseFromString('<div xmlns="http://www.w3.org/1999/xhtml" class="project w3-col s12 m4 l3 w3-hide-small w3-hide-medium w3-black"><div class="project-hero"><div class="project-hero-background" data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/383512d91854114fb0d3de5771e57a27.jpg"></div><h4 class="project-title"></h4><div class="project-description"></div></div></div>'
-                                                    , "text/xml");
-                main.append(doc.firstChild);
-            }
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-            // Add filling for medium screens
-            for (let index = 0; index < medToAdd; index++) {
-                let doc = new DOMParser().parseFromString('<div xmlns="http://www.w3.org/1999/xhtml" class="project w3-col s12 m4 l3 w3-hide-small w3-hide-large w3-black"><div class="project-hero"><div class="project-hero-background" data-background="https://s3.amazonaws.com/cvolcy/uploads/2019/03/383512d91854114fb0d3de5771e57a27.jpg"></div><h4 class="project-title"></h4><div class="project-description"></div></div></div>'
-                                                    , "text/xml");
-                main.append(doc.firstChild);
-            }
+        const { createApp } = Vue;
 
-            document.querySelectorAll(".project-hero-background").forEach(element => {
-                let image = element.getAttribute("data-background");
-                if (image) {
-                    element.style.backgroundImage = "url(" + image + ")";
+        createApp({
+            data() {
+                return {
+                    darkMode: false,
+                    mobileMenuOpen: false,
+                    activeFilter: 'All',
+                    skills: [
+                        { name: 'JavaScript / Vue.js', level: 92 },
+                        { name: 'Python / Machine Learning', level: 85 },
+                        { name: 'Node.js / APIs', level: 88 },
+                        { name: 'Cloud / Azure', level: 80 },
+                    ],
+                    projects: [
+                        {
+                            title: 'Wispy Fog',
+                            description: 'A Rust-based AI agent framework powered by the Rig ecosystem. Features an interactive CLI, LLM provider support (Gemini & Ollama), conversation history persistence, and an extensible tool registry.',
+                            image: 'https://opengraph.githubassets.com/1/cvolcy/wispy-fog',
+                            link: 'https://github.com/cvolcy/wispy-fog',
+                            tech: ['Rust', 'AI', 'LLM'],
+                            tags: ['AI/ML', 'Rust'],
+                        },
+                        {
+                            title: 'Object Detection',
+                            description: 'An object detection neural network built with the YOLOv3 architecture.',
+                            image: 'https://cvolcy.s3.amazonaws.com/uploads/2020/02/file0001655960310-2.jpg',
+                            link: '/detection',
+                            tech: ['Vue.js', 'Python'],
+                            tags: ['AI/ML', 'Vue.js', 'Python'],
+                        },
+                        {
+                            title: 'Minesweeper',
+                            description: 'A Minesweeper clone built with Vue.js and the Canvas API.',
+                            image: 'https://cvolcy.s3.amazonaws.com/uploads/2019/09/fff30993c11dbcd527755767eca3bb213.jpg',
+                            link: '/Views/minesweeper.html',
+                            tech: ['Vue.js', 'HTML5'],
+                            tags: ['Vue.js', 'Game'],
+                        },
+                        {
+                            title: 'Emotion Recognition',
+                            description: 'Real-time emotion recognition using a client-side inference model trained on the FER+ dataset.',
+                            image: 'https://s3.amazonaws.com/cvolcy/uploads/2019/03/e9262c3d9263ee9b1243f1b0cf58a857.jpg',
+                            link: '/emotion-recognition',
+                            tech: ['Vue.js', 'Node.js'],
+                            tags: ['AI/ML', 'Vue.js', 'Node.js'],
+                        },
+                        {
+                            title: 'GraphQL API',
+                            description: 'A serverless Node.js lambda that exposes video data via a GraphQL endpoint.',
+                            image: 'https://s3.amazonaws.com/cvolcy/uploads/2019/03/0001279117911.jpg',
+                            link: '/api/graphql?query={videos(lang:"fr"){title url}}',
+                            tech: ['Node.js', 'GraphQL'],
+                            tags: ['Node.js', 'API'],
+                        },
+                        {
+                            title: 'Cowsay Lambda',
+                            description: 'A Python lambda that renders ASCII cow art with a custom message.',
+                            image: 'https://s3.amazonaws.com/cvolcy/uploads/2019/03/aa4c1b80ea25d9d1230967b5347d65602.jpg',
+                            link: '/api/cowsay?message=Hello%20World',
+                            tech: ['Python'],
+                            tags: ['Python', 'API'],
+                        },
+                        {
+                            title: 'Bring Umbrella',
+                            description: 'A PWA that tells you whether to bring an umbrella based on today\'s weather.',
+                            image: 'https://s3.amazonaws.com/cvolcy/uploads/2019/04/77153e213c2273d4b08b82ad881b66a4.jpg',
+                            link: '/Umbrella/',
+                            tech: ['Vue.js', 'Node.js'],
+                            tags: ['Vue.js', 'Node.js', 'PWA'],
+                        },
+                        {
+                            title: 'Date Lambda',
+                            description: 'A lightweight Node.js lambda returning the current server date and time as JSON.',
+                            image: 'https://s3.amazonaws.com/cvolcy/uploads/2019/03/dfc3a12f93431b141d2cf03f0fe5c65d.jpg',
+                            link: '/api/date',
+                            tech: ['Node.js'],
+                            tags: ['Node.js', 'API'],
+                        },
+                        {
+                            title: 'Videos API',
+                            description: 'A Node.js lambda using Mongoose to fetch video data from a MongoDB database.',
+                            image: 'https://s3.amazonaws.com/cvolcy/uploads/2019/03/dwarf_mongoose2.jpg',
+                            link: '/api/videos',
+                            tech: ['Node.js', 'MongoDB'],
+                            tags: ['Node.js', 'API'],
+                        },
+                    ],
+                };
+            },
+            computed: {
+                allTags() {
+                    const tagSet = new Set(['All']);
+                    this.projects.forEach(p => p.tags.forEach(t => tagSet.add(t)));
+                    return [...tagSet];
+                },
+                filteredProjects() {
+                    if (this.activeFilter === 'All') return this.projects;
+                    return this.projects.filter(p => p.tags.includes(this.activeFilter));
+                },
+            },
+            methods: {
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    document.getElementById('html-root').classList.toggle('dark', this.darkMode);
+                    localStorage.setItem('darkMode', this.darkMode);
+                },
+            },
+            mounted() {
+                const saved = localStorage.getItem('darkMode');
+                if (saved === 'true' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    this.darkMode = true;
+                    document.getElementById('html-root').classList.add('dark');
                 }
-            });
-        });
-
-        function w3_open() {
-            document.getElementById("mySidebar").style.display = "block";
-            document.getElementById("myOverlay").style.display = "block";
-        }
-
-        function w3_close() {
-            document.getElementById("mySidebar").style.display = "none";
-            document.getElementById("myOverlay").style.display = "none";
-        }
+            },
+        }).mount('#app');
     </script>
 </body>
 

@@ -1,34 +1,6 @@
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
-        "root": {
-            "matchCondition": {
-                "methods": [ "GET" ],
-                "route": "/"
-            },
-            "backendUri": "https://localhost/api/staticFile?file=Views/index.html"
-        },
-        "bring-umbrella": {
-            "matchCondition": {
-                "methods": [ "GET" ],
-                "route": "/bring-umbrella"
-            },
-            "backendUri": "https://localhost/api/staticFile?file=Views/umbrella.html"
-        },
-        "emotion-recognition": {
-            "matchCondition": {
-                "methods": [ "GET" ],
-                "route": "/emotion-recognition"
-            },
-            "backendUri": "https://localhost/api/staticFile?file=Views/emotions.html"
-        },
-        "detection": {
-            "matchCondition": {
-                "methods": [ "GET" ],
-                "route": "/detection"
-            },
-            "backendUri": "https://localhost/api/staticFile?file=Views/detection.html"
-        },
         "nodedate": {
             "matchCondition": {
                 "methods": [ "GET" ],
@@ -63,13 +35,6 @@
                 "route": "/api/detection"
             },
             "backendUri": "https://fast-everglades-py.azurewebsites.net/api/detection"
-        },
-        "files": {
-            "matchCondition": {
-                "methods": [ "GET" ],
-                "route": "{*path}"
-            },
-            "backendUri": "https://localhost/api/staticFile?file={path}"
         }
     }
 }

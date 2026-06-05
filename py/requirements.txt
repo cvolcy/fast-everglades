@@ -1,12 +1,12 @@
 # Minimum packages for azure functions
 azure-functions
 azure-functions-worker
-protobuf==3.6.1
+protobuf==3.18.3
 six==1.12.0
 
 # Additional packages
 azure-storage-file==2.1.0
 cowpy==1.1.0
-numpy==1.16.4
+numpy==1.22.0
 onnxruntime==1.1.1
-Pillow==8.1.1
+Pillow==9.3.0
