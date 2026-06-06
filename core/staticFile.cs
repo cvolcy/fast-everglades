@@ -39,6 +39,17 @@ namespace fast_everglades
             return ServeStaticFile(req, filePath);
         }
 
+        [Function("analysis")]
+        public HttpResponseData Analysis(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "analysis")]
+            HttpRequestData req)
+        {
+            _logger.LogInformation("Serving analysis.html directly from analysis.");
+
+            var filePath = GetFilePath(req, "Views/analysis.html");
+            return ServeStaticFile(req, filePath);
+        }
+
         [Function("bringumbrella")]
         public HttpResponseData BringUmbrella(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "bring-umbrella")]
