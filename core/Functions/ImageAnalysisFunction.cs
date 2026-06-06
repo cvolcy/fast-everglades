@@ -13,7 +13,7 @@ namespace fast_everglades.Functions
 
         [Function("AnalyzeImage")]
         public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "analyze")] HttpRequestData req, CancellationToken cancellationToken)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "api/analyze")] HttpRequestData req, CancellationToken cancellationToken)
         {
             var parser = await MultipartFormDataParser.ParseAsync(req.Body, cancellationToken: cancellationToken);
 
