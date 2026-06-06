@@ -46,7 +46,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_118D36550B9447A9B3DCFE68CD82DB33 }}
 
       - name: 'Run Azure Functions Action'
-        uses: Azure/functions-action@v1
+        uses: azure/functions-action@v1
         id: fa
         with:
           app-name: 'fast-everglades'
