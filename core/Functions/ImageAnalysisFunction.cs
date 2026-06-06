@@ -7,8 +7,11 @@ using Microsoft.Extensions.AI;
 
 namespace fast_everglades.Functions
 {
-    public class ImageAnalysisFunction(IChatClient chatClient)
+    public class ImageAnalysisFunction(
+        ILogger<ImageAnalysisFunction> logger,
+        IChatClient chatClient)
     {
+        private readonly ILogger<ImageAnalysisFunction> _logger = logger;
         private readonly IChatClient _chatClient = chatClient;
 
         [Function("AnalyzeImage")]
@@ -63,6 +66,7 @@ namespace fast_everglades.Functions
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error analyzing image.");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
