@@ -146,6 +146,9 @@ namespace fast_everglades
                 _logger.LogInformation("Rendering static file for {filePath}", filePath);
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
+
+                if (!File.Exists(filePath)) throw new InvalidOperationException($"file at `{filePath}` does not exists.");
+
                 var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
                 response.Body = stream;
@@ -154,7 +157,7 @@ namespace fast_everglades
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error serving file {filePath}", filePath);
+                _logger.LogWarning(ex, "Error serving file {filePath}", filePath);
                 return req.CreateResponse(HttpStatusCode.NotFound);
             }
         }
