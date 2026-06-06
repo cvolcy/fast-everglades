@@ -33,16 +33,21 @@ namespace fast_everglades.Functions
                 return new BadRequestObjectResult(new { message = "Missing 'image' file." });
             }
 
-            // Convert uploaded file into an AI-ready DataContent object
             var imageBytes = imageStream.ToArray();
             var imageContent = new DataContent(imageBytes, imageContentType);
 
-            // Construct the multi-modal request
             var messages = new List<ChatMessage>
             {
-                new(ChatRole.System, @"You are an expert image analysis tool.
-                    Analyze the image and extract tags, a description, content safety metrics,
-                    and pixel coordinates for prominent objects."),
+                new(ChatRole.System, "You are an expert image analysis tool.\n" +
+                    "Analyze the image and extract tags, a description, content safety metrics. and a color palette.\n" + 
+                    "CRITICAL FOR DESCRIPTION:\n" +
+                    "- Do NOT include conversational filler, meta-commentary, or introductory phrases.\n" +
+                    "- Never start with phrases like 'The image depicts...', 'This is a photo of...', 'An image showing...', or 'We can see...'.\n" +
+                    "- Start directly with the subject matter. Act like a caption writer.\n\n" +
+                    "Example Bad: 'The image depicts a futuristic city under a neon sky.'\n" +
+                    "Example Good: 'A futuristic city under a neon sky.'" +
+                    "format the color palette in hex css notation like #A0A0A0"),
+                    //and pixel coordinates for prominent objects."),
                 new(ChatRole.User,
                 [
                     new TextContent("Analyze this image according to the schema provided."),
@@ -52,7 +57,6 @@ namespace fast_everglades.Functions
 
             try
             {
-                // Execute using the unified client
                 var response = await _chatClient.GetResponseAsync<ImageAnalysisResponse>(messages, cancellationToken: cancellationToken);
 
                 return new OkObjectResult(response.Result);
@@ -69,13 +73,15 @@ namespace fast_everglades.Functions
         public required string Description { get; set; }
         public string[] Tags { get; set; } = [];
         public bool NSFW { get; set; }
-        public ImageDetection[] Detections { get; set; } = [];
+        public string[] ColorPalette { get; set; } = [];
     }
 
     public class ImageDetection
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public required string Label { get; set; }
     }
 }

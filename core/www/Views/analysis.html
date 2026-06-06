@@ -16,17 +16,17 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50: '#f0f0ff',
-                            100: '#e0e0ff',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
+                            50:  '#ecfdf5',
+                            100: '#d1fae5',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
                         },
-                        cyan: {
-                            300: '#67e8f9',
-                            400: '#22d3ee',
-                            500: '#06b6d4',
+                        amber: {
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
                         }
                     }
                 }
@@ -43,63 +43,330 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <style>
         /* ── Base ── */
-        [v-cloak] {
-            display: none;
+        [v-cloak] { display: none; }
+        html { scroll-behavior: smooth; }
+
+        /* ── Aurora hero background ── */
+        .aurora-bg {
+            background: #0a1a12;
+            position: relative;
+            overflow: hidden;
+        }
+        .aurora-bg::before, .aurora-bg::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.35;
+            animation: drift 12s ease-in-out infinite alternate;
+        }
+        .aurora-bg::before {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, #059669, transparent 70%);
+            top: -200px; left: -150px;
+        }
+        .aurora-bg::after {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #f59e0b, transparent 70%);
+            bottom: -150px; right: -100px;
+            animation-delay: -6s;
+        }
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(40px, 30px) scale(1.08); }
+        }
+        .light-hero {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 40%, #fef3c7 100%);
         }
 
-        html {
-            scroll-behavior: smooth;
+        /* ── Glassmorphism ── */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
         }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(14px) saturate(150%);
+            -webkit-backdrop-filter: blur(14px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 32px rgba(16, 185, 129, 0.18), 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(14px) saturate(160%);
+            -webkit-backdrop-filter: blur(14px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card-light:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 32px rgba(5, 150, 105, 0.15), 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        /* ── Gradient text ── */
+        .grad-text {
+            background: linear-gradient(135deg, #34d399 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .grad-text-light {
+            background: linear-gradient(135deg, #059669 0%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Glow button ── */
+        .btn-glow {
+            background: linear-gradient(135deg, #059669, #f59e0b);
+            box-shadow: 0 0 20px rgba(5, 150, 105, 0.45);
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 38px rgba(5, 150, 105, 0.7), 0 0 18px rgba(245, 158, 11, 0.4);
+            transform: translateY(-1px);
+        }
+        .btn-glow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-outline-glow {
+            border: 1.5px solid rgba(16, 185, 129, 0.6);
+            color: #34d399;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-glow:hover {
+            background: rgba(16, 185, 129, 0.12);
+            border-color: #34d399;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.3);
+        }
+
+        /* ── Nav link underline ── */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, #059669, #f59e0b);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Orb decorations ── */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(72px);
+            pointer-events: none;
+        }
+
+        /* ── Upload zone ── */
+        .upload-zone {
+            border: 2px dashed rgba(52, 211, 153, 0.4);
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        .upload-zone:hover, .upload-zone.drag-over {
+            border-color: #34d399;
+            background: rgba(52, 211, 153, 0.06);
+        }
+
+        /* ── Detection marker ── */
+        .detection-marker {
+            position: absolute;
+            border: 2px solid #34d399;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+        }
+        .marker-label {
+            position: absolute;
+            top: -22px; left: 0;
+            background: #059669;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* ── Tag pill ── */
+        .tag-pill {
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            color: #34d399;
+        }
+        .dark .tag-pill {
+            background: rgba(52, 211, 153, 0.12);
+        }
+
+        /* ── Spin animation ── */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin { animation: spin 0.8s linear infinite; }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a1a12; }
+        ::-webkit-scrollbar-thumb { background: #059669; border-radius: 3px; }
     </style>
 </head>
 
-<body id="app" v-cloak>
+<body id="app" class="font-sans bg-gray-50 text-gray-900 dark:bg-[#0a1a12] dark:text-gray-100 transition-colors duration-300" v-cloak>
 
-    <div class="analyzer-container">
-        <h2>AI Image Analyzer (MEAI Enabled)</h2>
-
-        <div class="upload-zone">
-            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" />
-            <button @click="$refs.fileInput.click()">Select Image</button>
-        </div>
-
-        <div v-if="imagePreviewUrl" class="image-workspace">
-            <img :src="imagePreviewUrl" alt="Preview" ref="imageRef" class="preview-img" />
-
-            <div v-for="(det, index) in analysisResult?.detections"
-                 :key="index"
-                 class="detection-marker"
-                 :style="{ top: det.y + 'px', left: det.x + 'px' }">
-                <span class="marker-label">{{ det.label }}</span>
+    <!-- ── NAVBAR ── -->
+    <header :class="darkMode ? 'glass' : 'glass-light'" class="fixed top-0 inset-x-0 z-50 border-b border-white/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/" :class="darkMode ? 'grad-text' : 'grad-text-light'" class="text-xl font-extrabold tracking-tight">
+                &lt;CV /&gt;
+            </a>
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="/" class="nav-link text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors">Home</a>
+                <span :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold">Image Analysis</span>
+            </nav>
+            <div class="flex items-center gap-3">
+                <!-- Dark mode toggle -->
+                <button @click="toggleDark" aria-label="Toggle dark mode"
+                    :class="darkMode ? 'glass text-emerald-300' : 'glass-light text-emerald-700'"
+                    class="p-2 rounded-xl hover:scale-105 transition-all">
+                    <i :class="darkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+                </button>
+                <!-- Mobile menu button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden p-2 rounded-xl" aria-label="Menu">
+                    <i :class="[mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars', darkMode ? 'text-emerald-300' : 'text-emerald-700']"></i>
+                </button>
             </div>
         </div>
-
-        <button :disabled="!selectedFile || loading" @click="uploadImage" class="submit-btn">
-            {{ loading ? 'Analyzing Matrix...' : 'Analyze Image' }}
-        </button>
-
-        <div v-if="errorMessage" class="error-banner">{{ errorMessage }}</div>
-
-        <div v-if="analysisResult" class="meta-view">
-            <h3>{{ analysisResult.description }}</h3>
-            <span v-if="analysisResult.nsfw" class="nsfw-badge">⚠️ NSFW Content Detected</span>
-            <div class="tags-container">
-                <span v-for="tag in analysisResult.tags" :key="tag" class="tag">#{{ tag }}</span>
-            </div>
+        <!-- Mobile Nav -->
+        <div v-show="mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden border-t border-white/20 px-4 py-4 flex flex-col gap-4 text-sm font-medium">
+            <a href="/" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors">Home</a>
+            <span :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold">Image Analysis</span>
         </div>
-    </div>
+    </header>
+
+    <!-- ── HERO / ANALYZER ── -->
+    <section :class="darkMode ? 'aurora-bg' : 'light-hero'" class="relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-16 overflow-hidden">
+        <!-- Light mode orbs -->
+        <div v-show="!darkMode" class="orb w-96 h-96 bg-emerald-200 top-[-4rem] left-[-4rem] opacity-60"></div>
+        <div v-show="!darkMode" class="orb w-80 h-80 bg-amber-200 bottom-[-3rem] right-[-3rem] opacity-50"></div>
+
+        <!-- Page header -->
+        <div class="relative z-10 text-center mb-10">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">AI Image Intelligence</p>
+            <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-3 text-gray-900 dark:text-white">
+                AI Image <span :class="darkMode ? 'grad-text' : 'grad-text-light'">Analyzer</span>
+            </h1>
+            <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Instant AI-powered image insights and description generation.</p>
+        </div>
+
+        <!-- Analyzer card -->
+        <div :class="darkMode ? 'glass' : 'glass-light'" class="relative z-10 w-full max-w-2xl rounded-3xl px-6 sm:px-10 py-10 shadow-2xl space-y-8">
+
+            <!-- Upload zone -->
+            <div class="upload-zone rounded-2xl p-8 text-center cursor-pointer"
+                 @click="$refs.fileInput.click()"
+                 @dragover.prevent="dragOver = true"
+                 @dragleave="dragOver = false"
+                 @drop.prevent="handleDrop"
+                 :class="{ 'drag-over': dragOver }">
+                <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="hidden" />
+                <div v-if="!imagePreviewUrl">
+                    <i class="fas fa-cloud-upload-alt text-4xl mb-3" :class="darkMode ? 'text-emerald-400' : 'text-emerald-600'"></i>
+                    <p class="font-semibold text-gray-700 dark:text-gray-200 mb-1">Click or drag &amp; drop an image</p>
+                    <p class="text-sm text-gray-400 dark:text-gray-500">PNG, JPG, WEBP supported</p>
+                </div>
+                <!-- Image preview with detection markers -->
+                <div v-else class="relative inline-block" @click.stop>
+                    <img :src="imagePreviewUrl" alt="Preview" ref="imageRef"
+                         class="max-h-72 rounded-xl object-contain shadow-lg mx-auto" />
+                    <div v-for="(det, index) in analysisResult?.detections" :key="index"
+                         class="detection-marker"
+                         :style="{ top: det.y + 'px', left: det.x + 'px', width: (det.width || 60) + 'px', height: (det.height || 40) + 'px' }">
+                        <span class="marker-label">{{ det.label }}</span>
+                    </div>
+                    <button @click.stop="clearImage"
+                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 text-white text-xs flex items-center justify-center hover:bg-black/70 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error banner -->
+            <div v-if="errorMessage"
+                 class="flex items-center gap-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3 text-sm">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>{{ errorMessage }}</span>
+            </div>
+
+            <!-- Analyze button -->
+            <button :disabled="!selectedFile || loading" @click="uploadImage"
+                    class="btn-glow w-full py-3 text-white font-semibold rounded-full flex items-center justify-center gap-2 text-base">
+                <i v-if="loading" class="fas fa-circle-notch spin"></i>
+                <i v-else class="fas fa-search"></i>
+                {{ loading ? 'Analyzing…' : 'Analyze Image' }}
+            </button>
+
+            <!-- Results -->
+            <transition name="fade">
+                <div v-if="analysisResult" :class="darkMode ? 'glass-card' : 'glass-card-light'" class="rounded-2xl p-6 space-y-4">
+                    <div class="flex items-start justify-between gap-4 flex-wrap">
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-100 text-base leading-snug flex-1">
+                            {{ analysisResult.description }}
+                        </h3>
+                        <span v-if="analysisResult.nsfw"
+                              class="inline-flex items-center gap-1.5 bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap">
+                            <i class="fas fa-exclamation-triangle"></i> NSFW Detected
+                        </span>
+                    </div>
+                    <div v-if="analysisResult.tags?.length" class="flex flex-wrap gap-2">
+                        <span v-for="tag in analysisResult.tags" :key="tag"
+                              class="tag-pill text-xs font-medium px-3 py-1 rounded-full">
+                            #{{ tag }}
+                        </span>
+                    </div>
+                    <div v-if="analysisResult.colorPalette?.length" class="flex flex-wrap gap-2">
+                        <span v-for="palette in analysisResult.colorPalette" :key="tag"
+                              class="color-pill text-xs font-medium px-3 py-1 rounded-full"
+                              :style="{ 'background-color': palette, color: `contrast-color(${palette})` }">
+                            {{ palette }}
+                        </span>
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="py-8 px-4 text-center text-sm text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-[#071510] border-t border-gray-200 dark:border-white/10">
+        <p>© <span id="year"></span> Clervens Volcy — Built with Vue.js &amp; Tailwind CSS</p>
+    </footer>
 
     <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
         const { createApp } = Vue;
 
         createApp({
             data() {
                 return {
-                    // Your existing UI states
                     darkMode: false,
                     mobileMenuOpen: false,
-
-                    // Image analyzer states
+                    dragOver: false,
                     selectedFile: null,
                     imagePreviewUrl: null,
                     analysisResult: null,
@@ -107,21 +374,33 @@
                     errorMessage: ''
                 };
             },
-            computed: {
-                // Helpful computed property for the template button :disabled condition
-                canSubmit() {
-                    return this.selectedFile && !this.loading;
-                }
-            },
             methods: {
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    document.getElementById('html-root').classList.toggle('dark', this.darkMode);
+                    localStorage.setItem('darkMode', this.darkMode);
+                },
                 handleFileChange(event) {
                     const file = event.target.files[0];
-                    if (file) {
-                        this.selectedFile = file;
-                        this.imagePreviewUrl = URL.createObjectURL(file); // Generates a local preview URL
-                        this.analysisResult = null;
-                        this.errorMessage = '';
-                    }
+                    if (file) this.loadFile(file);
+                },
+                handleDrop(event) {
+                    this.dragOver = false;
+                    const file = event.dataTransfer.files[0];
+                    if (file && file.type.startsWith('image/')) this.loadFile(file);
+                },
+                loadFile(file) {
+                    this.selectedFile = file;
+                    this.imagePreviewUrl = URL.createObjectURL(file);
+                    this.analysisResult = null;
+                    this.errorMessage = '';
+                },
+                clearImage() {
+                    this.selectedFile = null;
+                    this.imagePreviewUrl = null;
+                    this.analysisResult = null;
+                    this.errorMessage = '';
+                    this.$refs.fileInput.value = '';
                 },
                 async uploadImage() {
                     if (!this.selectedFile) return;
@@ -145,8 +424,7 @@
                         if (!response.ok) {
                             throw new Error("Failed to evaluate image.");
                         }
-                        let responseData = await response.json();
-                        debugger;
+                        const responseData = await response.json();
                         this.analysisResult = responseData.value;
                     } catch (err) {
                         this.errorMessage = err.message;
@@ -156,7 +434,11 @@
                 }
             },
             mounted() {
-                // Ready for any initialization logic if needed
+                const saved = localStorage.getItem('darkMode');
+                if (saved === 'true' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    this.darkMode = true;
+                    document.getElementById('html-root').classList.add('dark');
+                }
             }
         }).mount('#app');
     </script>
