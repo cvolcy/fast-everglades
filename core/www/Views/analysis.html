@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+
+<head>
+    <title>Fast Everglades | Image Analysis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fast Everglades, Image Analysis — Clervens Volcy">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#f0f0ff',
+                            100: '#e0e0ff',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        cyan: {
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        /* ── Base ── */
+        [v-cloak] {
+            display: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body id="app" v-cloak>
+
+    <div class="analyzer-container">
+        <h2>AI Image Analyzer (MEAI Enabled)</h2>
+
+        <div class="upload-zone">
+            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" />
+            <button @click="$refs.fileInput.click()">Select Image</button>
+        </div>
+
+        <div v-if="imagePreviewUrl" class="image-workspace">
+            <img :src="imagePreviewUrl" alt="Preview" ref="imageRef" class="preview-img" />
+
+            <div v-for="(det, index) in analysisResult?.detections"
+                 :key="index"
+                 class="detection-marker"
+                 :style="{ top: det.y + 'px', left: det.x + 'px' }">
+                <span class="marker-label">{{ det.label }}</span>
+            </div>
+        </div>
+
+        <button :disabled="!selectedFile || loading" @click="uploadImage" class="submit-btn">
+            {{ loading ? 'Analyzing Matrix...' : 'Analyze Image' }}
+        </button>
+
+        <div v-if="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+        <div v-if="analysisResult" class="meta-view">
+            <h3>{{ analysisResult.description }}</h3>
+            <span v-if="analysisResult.nsfw" class="nsfw-badge">⚠️ NSFW Content Detected</span>
+            <div class="tags-container">
+                <span v-for="tag in analysisResult.tags" :key="tag" class="tag">#{{ tag }}</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // Your existing UI states
+                    darkMode: false,
+                    mobileMenuOpen: false,
+
+                    // Image analyzer states
+                    selectedFile: null,
+                    imagePreviewUrl: null,
+                    analysisResult: null,
+                    loading: false,
+                    errorMessage: ''
+                };
+            },
+            computed: {
+                // Helpful computed property for the template button :disabled condition
+                canSubmit() {
+                    return this.selectedFile && !this.loading;
+                }
+            },
+            methods: {
+                handleFileChange(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.selectedFile = file;
+                        this.imagePreviewUrl = URL.createObjectURL(file); // Generates a local preview URL
+                        this.analysisResult = null;
+                        this.errorMessage = '';
+                    }
+                },
+                async uploadImage() {
+                    if (!this.selectedFile) return;
+
+                    this.loading = true;
+                    this.errorMessage = '';
+                    this.analysisResult = null;
+
+                    const formData = new FormData();
+                    formData.append('image', this.selectedFile);
+
+                    try {
+                        const response = await fetch('/api/analyze', {
+                            method: 'POST',
+                            body: formData,
+                        });
+
+                        if (response.status === 429) {
+                            throw new Error("Rate limit exceeded. Try again shortly.");
+                        }
+                        if (!response.ok) {
+                            throw new Error("Failed to evaluate image.");
+                        }
+                        let responseData = await response.json();
+                        debugger;
+                        this.analysisResult = responseData.value;
+                    } catch (err) {
+                        this.errorMessage = err.message;
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            },
+            mounted() {
+                // Ready for any initialization logic if needed
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
