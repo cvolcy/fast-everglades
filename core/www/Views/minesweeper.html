@@ -1,123 +1,499 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-root">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fast Everglades | Minesweeper</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .w3-main {
-            margin-left:340px;
-            margin-right:40px
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fast Everglades, Minesweeper — Vue.js &amp; Canvas">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50:  '#fefce8',
+                            100: '#fef9c3',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        },
+                        silver: {
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                        }
+                    }
+                }
+            }
         }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        [v-cloak] { display: none; }
+        html { scroll-behavior: smooth; }
+
+        .aurora-bg {
+            background: #0f0f05;
+            position: relative;
+            overflow: hidden;
+        }
+        .aurora-bg::before, .aurora-bg::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.35;
+            animation: drift 12s ease-in-out infinite alternate;
+        }
+        .aurora-bg::before {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, #eab308, transparent 70%);
+            top: -200px; left: -150px;
+        }
+        .aurora-bg::after {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #94a3b8, transparent 70%);
+            bottom: -150px; right: -100px;
+            animation-delay: -6s;
+        }
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(40px, 30px) scale(1.08); }
+        }
+        .light-hero {
+            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 40%, #f1f5f9 100%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(14px) saturate(150%);
+            -webkit-backdrop-filter: blur(14px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(234, 179, 8, 0.5);
+            box-shadow: 0 0 32px rgba(234, 179, 8, 0.18), 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(14px) saturate(160%);
+            -webkit-backdrop-filter: blur(14px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card-light:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 32px rgba(202, 138, 4, 0.15), 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .grad-text {
+            background: linear-gradient(135deg, #facc15 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .grad-text-light {
+            background: linear-gradient(135deg, #ca8a04 0%, #64748b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, #eab308, #94a3b8);
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.45);
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 38px rgba(234, 179, 8, 0.7), 0 0 18px rgba(148, 163, 184, 0.4);
+            transform: translateY(-1px);
+        }
+        .btn-outline-glow {
+            border: 1.5px solid rgba(234, 179, 8, 0.6);
+            color: #facc15;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-glow:hover {
+            background: rgba(234, 179, 8, 0.12);
+            border-color: #facc15;
+            box-shadow: 0 0 18px rgba(234, 179, 8, 0.3);
+        }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, #eab308, #94a3b8);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(72px);
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f0f05; }
+        ::-webkit-scrollbar-thumb { background: #eab308; border-radius: 3px; }
+
+        .canvas-wrap { overflow: auto; max-width: 100%; }
+        canvas { display: block; cursor: pointer; border-radius: 8px; }
     </style>
 </head>
 
-<body>
-    <div id="navigation">
+<body id="app" class="font-sans bg-gray-50 text-gray-900 dark:bg-[#0f0f05] dark:text-gray-100 transition-colors duration-300" v-cloak>
 
-        <!-- Sidebar/menu -->
-        <nav class="w3-sidebar w3-yellow w3-collapse w3-top w3-large w3-padding"
-            style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
-            <a href="javascript:void(0)" @click="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
-                style="width:100%;font-size:22px">Close
-                Menu</a>
-            <div class="w3-container">
-                <h3 class="w3-padding-64"><b>Fast<br>Everglades</b></h3>
+    <!-- NAVBAR -->
+    <header :class="darkMode ? 'glass' : 'glass-light'" class="fixed top-0 inset-x-0 z-50 border-b border-white/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="/" :class="darkMode ? 'grad-text' : 'grad-text-light'" class="text-xl font-extrabold tracking-tight">&lt;CV /&gt;</a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="/" class="nav-link text-gray-600 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Home</a>
+                <a href="#overview" class="nav-link text-gray-600 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Overview</a>
+                <a href="#architecture" class="nav-link text-gray-600 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Architecture</a>
+                <a href="#controls" class="nav-link text-gray-600 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Controls</a>
+                <a href="#demo" class="nav-link text-gray-600 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Demo</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <button @click="toggleDark" aria-label="Toggle dark mode"
+                    :class="darkMode ? 'glass text-yellow-300' : 'glass-light text-yellow-700'"
+                    class="p-2 rounded-xl hover:scale-105 transition-all">
+                    <i :class="darkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+                </button>
+                <button @click="mobileMenuOpen = !mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden p-2 rounded-xl" aria-label="Menu">
+                    <i :class="[mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars', darkMode ? 'text-yellow-300' : 'text-yellow-700']"></i>
+                </button>
             </div>
-            <div class="w3-bar-block">
-                <a href="/" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
-                <a href="#Overview" @click="w3_close()" class="w3-bar-item w3-button w3-hover-white">Overview</a>
-                <a href="#Architecture" @click="w3_close()"
-                    class="w3-bar-item w3-button w3-hover-white">Architecture</a>
-                <a href="#Demo" @click="w3_close()"
-                    class="w3-bar-item w3-button w3-hover-white">Demo</a>
-            </div>
-        </nav>
+        </div>
+        <div v-show="mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden border-t border-white/20 px-4 py-4 flex flex-col gap-4 text-sm font-medium">
+            <a href="/" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Home</a>
+            <a href="#overview" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Overview</a>
+            <a href="#architecture" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Architecture</a>
+                <a href="#controls" class="nav-link text-gray-600 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Controls</a>
+                <a href="#demo" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors">Demo</a>
+        </div>
+    </header>
 
-        <!-- Top menu on small screens -->
-        <header class="w3-container w3-top w3-hide-large w3-yellow w3-xlarge w3-padding">
-            <a href="javascript:void(0)" class="w3-button w3-yellow w3-margin-right" @click="w3_open()">☰</a>
-            <span>Vue.JS | Minesweeper</span>
-        </header>
-
-        <!-- Overlay effect when opening sidebar on small screens -->
-        <div class="w3-overlay w3-hide-large" @click="w3_close()" style="cursor:pointer" title="close side menu"
-            id="myOverlay"></div>
-
-    </div>
-    <!-- !PAGE CONTENT! -->
-    <div id="app" class="w3-main">
-        <div id="Overview" class="w3-container" style="margin-top: 80px">
-            <h1 class="w3-jumbo" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><b>Minesweeper</b></h1>
-            <h2 class="w3-xxxlarge w3-text-gray"><b>Overview.</b></h2>
-            <hr class="w3-round">
-            <p>
-                A minesweeper clone, built in using Vuejs and canvas.
+    <!-- HERO -->
+    <section :class="darkMode ? 'aurora-bg' : 'light-hero'" class="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pt-20 pb-12 overflow-hidden">
+        <div v-show="!darkMode" class="orb w-96 h-96 bg-yellow-200 top-[-4rem] left-[-4rem] opacity-60"></div>
+        <div v-show="!darkMode" class="orb w-80 h-80 bg-slate-200 bottom-[-3rem] right-[-3rem] opacity-50"></div>
+        <div :class="darkMode ? 'glass' : 'glass-light'" class="relative z-10 max-w-2xl mx-auto rounded-3xl px-8 py-12 shadow-2xl">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Vue.js · Canvas API</p>
+            <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-4 text-gray-900 dark:text-white">
+                &#x1F4A3; <span :class="darkMode ? 'grad-text' : 'grad-text-light'">Minesweeper</span>
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-md mx-auto mb-6">
+                A classic minesweeper clone built with Vue.js and HTML5 Canvas.
             </p>
+            <a href="#demo" class="btn-glow inline-block px-6 py-3 text-white font-semibold rounded-full">
+                <i class="fas fa-play mr-2"></i>Play Now
+            </a>
         </div>
+    </section>
 
-        <div id="Architecture" class="w3-container" style="margin-top: 80px">
-            <h2 class="w3-xxxlarge w3-text-gray"><b>Architecture.</b></h2>
-            <hr class="w3-round">
-            
-            <div class="w3-display-container">
-                <img src="/Minesweeper/arch.png" alt="Game Architecture"
-                    style="max-width: 100%; margin-bottom: 20px;">
-                <em>A simplified representation of the architecture used for the game.</em>
-            </div>
-        </div>
-
-        <div id="Demo" class="w3-container" style="margin-top: 80px">
-            <h2 class="w3-xxxlarge w3-text-gray"><b>Demo.</b></h2>
-            <hr class="w3-round">
-            <div id="game">
-                <div v-if="state == GAME_STATE.PENDING">
-                    <div class="w3-row">
-                        <div class="w3-col l3 m4 s12">
-                            <label>Rows</label>
-                            <input  v-model.number="rows"
-                                class="w3-input w3-border" min="5" max="50" type="number">
-                        </div>
-                        <div class="w3-col l3 m4 s12">
-                            <label>Columns</label>
-                            <input  v-model.number="cols"
-                                class="w3-input w3-border" min="5" max="50" type="number">
-                        </div>
-                        <div class="w3-col l3 m4 s12">
-                            <label>Mines</label>
-                            <input  v-model.number="mines"
-                                class="w3-input w3-border" min="1" :max="Math.floor(cols*rows*0.9)" type="number">
-                        </div>
-                    </div>
-                    <div class="w3-row w3-padding-16">
-                        <div class="w3-col s12">
-                            <button class="w3-button w3-yellow w3-block" @click="startGame">Start</button>
-                        </div>
-                    </div>
-                </div>
-                <div v-show="state != GAME_STATE.PENDING">
-                    <canvas ref="canvas"
-                        @click="onCellClick"
-                        width="500" height="300"
-                        style="border: gray 1px solid;"></canvas>
-            
-                    <div class="w3-row w3-padding-16">
-                        <div class="w3-col l12">
-                            <button class="w3-button w3-yellow w3-block" @click="restart">Restart</button>
-                        </div>
-                    </div>
+    <!-- OVERVIEW -->
+    <section id="overview" class="py-20 px-4 bg-white dark:bg-[#0f0f05]">
+        <div class="max-w-4xl mx-auto">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2 text-center">About this project</p>
+            <h2 class="text-3xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">Overview</h2>
+            <hr class="border-yellow-400/40 mb-8">
+            <div :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl p-8 shadow-lg">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+                    A minesweeper clone built using <strong class="text-yellow-600 dark:text-yellow-400">Vue.js</strong> and
+                    <strong class="text-yellow-600 dark:text-yellow-400">HTML5 Canvas</strong>.
+                    Configure grid size and mine count, then click cells to reveal them. Avoid the mines — or face the consequences!
+                </p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700">Vue.js</span>
+                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-600">Canvas API</span>
+                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700">JavaScript</span>
+                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-600">HTML5</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- ARCHITECTURE -->
+    <section id="architecture" class="py-20 px-4 bg-gray-50 dark:bg-[#0a0a00]">
+        <div class="max-w-4xl mx-auto">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2 text-center">How it&apos;s built</p>
+            <h2 class="text-3xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">Architecture</h2>
+            <hr class="border-yellow-400/40 mb-8">
+
+            <!-- Diagram -->
+            <div :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl p-8 shadow-lg text-center mb-8">
+                <img src="/Minesweeper/arch.png" alt="Game Architecture" class="max-w-full mx-auto rounded-xl mb-4 shadow-md">
+                <p class="text-sm text-gray-500 dark:text-gray-400 italic">A simplified representation of the architecture used for the game.</p>
+            </div>
+
+            <!-- Component breakdown -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <!-- Cell class -->
+                <div :class="darkMode ? 'glass' : 'glass-card-light'" class="rounded-2xl p-6 shadow-md">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-yellow-400/20 text-yellow-500 dark:text-yellow-300 text-lg font-bold">C</div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Cell</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Represents a single square on the grid. Responsible for its own rendering via the Canvas 2D API.</p>
+                    <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">x, y, w</span> — position &amp; size in canvas pixels</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">hasAMine</span> — whether the cell contains a mine</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">revealed</span> — has the player uncovered it</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">flagged</span> — player-placed flag marker</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">neighborsCount</span> — adjacent mine count (cached)</li>
+                    </ul>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">show(darkMode)</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">reveal(grid)</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">minesCount(grid)</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">contains(x,y)</span>
+                    </div>
+                </div>
+                <!-- Grid -->
+                <div :class="darkMode ? 'glass' : 'glass-card-light'" class="rounded-2xl p-6 shadow-md">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-400/20 text-slate-500 dark:text-slate-300 text-lg font-bold">G</div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Grid</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A 2D array <span class="font-mono text-yellow-600 dark:text-yellow-400">Cell[cols][rows]</span> managed by the Vue instance. Mines are seeded randomly then each cell pre-computes its neighbor count.</p>
+                    <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">cols × rows</span> — configurable 5–50 each axis</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">mines</span> — up to 90 % of total cells</li>
+                        <li>Flood-fill reveal for zero-neighbor cells (recursive)</li>
+                        <li>Win detected when all safe cells are revealed</li>
+                    </ul>
+                </div>
+                <!-- Vue App -->
+                <div :class="darkMode ? 'glass' : 'glass-card-light'" class="rounded-2xl p-6 shadow-md">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-yellow-400/20 text-yellow-500 dark:text-yellow-300 text-lg font-bold">V</div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Vue 3 App</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Acts as the controller. Owns reactive state and wires DOM events to game logic.</p>
+                    <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">state</span> — PENDING / STARTED / WIN / OVER</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">flagCount</span> / <span class="text-yellow-600 dark:text-yellow-400 font-mono">flagsRemaining</span> — computed</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">darkMode</span> — persisted via localStorage</li>
+                        <li>Triggers canvas redraw on every state change</li>
+                    </ul>
+                </div>
+                <!-- Canvas -->
+                <div :class="darkMode ? 'glass' : 'glass-card-light'" class="rounded-2xl p-6 shadow-md">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-400/20 text-slate-500 dark:text-slate-300 text-lg font-bold">&lt;/&gt;</div>
+                        <h3 class="font-bold text-gray-900 dark:text-white text-lg">Canvas Renderer</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">HTML5 <span class="font-mono text-yellow-600 dark:text-yellow-400">&lt;canvas&gt;</span> is the sole rendering surface. Each frame clears and redraws all cells imperatively.</p>
+                    <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
+                        <li>Cell size auto-scales to canvas width ÷ cols</li>
+                        <li>Radial gradient glow for revealed mines</li>
+                        <li>Color-coded neighbor numbers (1–8)</li>
+                        <li>Gold pennant flag drawn via Canvas path API</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Data-flow strip -->
+            <div :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl px-6 py-5 shadow-md">
+                <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Data Flow</p>
+                <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <span class="px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700">User Click / Right-Click</span>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-600">Vue Event Handler</span>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <span class="px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700">Cell.reveal / .flagged</span>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-600">draw() → Canvas 2D</span>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <span class="px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700">State Update (WIN / OVER)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <section id="controls" class="py-20 px-4 bg-white dark:bg-[#0f0f05]">
+        <div class="max-w-4xl mx-auto">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2 text-center">How to play</p>
+            <h2 class="text-3xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">Controls</h2>
+            <hr class="border-yellow-400/40 mb-8">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                <!-- Left click -->
+                <div :class="darkMode ? 'glass' : 'glass-card-light'" class="rounded-2xl p-6 shadow-md flex gap-4 items-start">
+                    <div class="w-12 h-12 shrink-0 rounded-xl bg-yellow-400/20 flex items-center justify-center text-2xl">&#x1F5B1;&#xFE0F;</div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 dark:text-white mb-1">Left Click</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Reveals the cell. If the cell has no neighboring mines, a <strong class="text-yellow-600 dark:text-yellow-400">flood-fill</strong> automatically uncovers all connected safe cells. Clicking a mine ends the game immediately.</p>
+                    </div>
+                </div>
+                <!-- Right click -->
+                <div :class="darkMode ? 'glass' : 'glass-card-light'" class="rounded-2xl p-6 shadow-md flex gap-4 items-start">
+                    <div class="w-12 h-12 shrink-0 rounded-xl bg-slate-400/20 flex items-center justify-center text-2xl">&#x1F6A9;</div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 dark:text-white mb-1">Right Click</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Toggles a <strong class="text-yellow-600 dark:text-yellow-400">flag</strong> on an unrevealed cell. A flagged cell cannot be accidentally revealed by a left-click. Right-click again to remove the flag.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Number guide -->
+            <div :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl p-6 shadow-md mb-6">
+                <h3 class="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-hashtag text-yellow-500"></i> Reading the Numbers
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">When a safe cell is revealed, it shows how many of its <strong>8 surrounding neighbors</strong> contain a mine. Use these numbers to deduce where mines are hiding.</p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-700">1</span>
+                        <span class="text-xs text-gray-400">1 mine</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg bg-slate-100 dark:bg-slate-800/50 text-slate-500 dark:text-slate-300 border border-slate-300 dark:border-slate-600">2</span>
+                        <span class="text-xs text-gray-400">2 mines</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg bg-red-100 dark:bg-red-900/20 text-red-500 dark:text-red-400 border border-red-200 dark:border-red-800">3</span>
+                        <span class="text-xs text-gray-400">3 mines</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg bg-purple-100 dark:bg-purple-900/20 text-purple-500 dark:text-purple-400 border border-purple-200 dark:border-purple-800">4+</span>
+                        <span class="text-xs text-gray-400">danger!</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1">
+                        <span class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-400 border border-slate-200 dark:border-slate-700">&#x20;</span>
+                        <span class="text-xs text-gray-400">0 — safe zone</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goal -->
+            <div :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl p-6 shadow-md">
+                <h3 class="font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-trophy text-yellow-500"></i> Goal
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    Reveal <strong class="text-yellow-600 dark:text-yellow-400">every safe cell</strong> on the board without detonating a mine.
+                    You win the moment all non-mine cells are uncovered — flagging every mine is not required, but it helps you track them.
+                </p>
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                    <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
+                        <i class="fas fa-check-circle text-yellow-500"></i>
+                        <span class="text-gray-700 dark:text-gray-300">Reveal all safe cells</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                        <i class="fas fa-flag text-yellow-500"></i>
+                        <span class="text-gray-700 dark:text-gray-300">Flag suspected mines</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+                        <i class="fas fa-times-circle text-red-500"></i>
+                        <span class="text-gray-700 dark:text-gray-300">Avoid all mines</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- DEMO -->
+    <section id="demo" class="py-20 px-4 bg-white dark:bg-[#0f0f05]">
+        <div class="max-w-4xl mx-auto">
+            <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2 text-center">Try it out</p>
+            <h2 class="text-3xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">Demo</h2>
+            <hr class="border-yellow-400/40 mb-8">
+
+            <!-- Setup form -->
+            <div v-if="state == GAME_STATE.PENDING" :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl p-8 shadow-lg space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">Rows</label>
+                        <input v-model.number="rows" type="number" min="5" max="50"
+                            class="w-full px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white/70 dark:bg-white/10 border-gray-300 dark:border-white/20 text-gray-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">Columns</label>
+                        <input v-model.number="cols" type="number" min="5" max="50"
+                            class="w-full px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white/70 dark:bg-white/10 border-gray-300 dark:border-white/20 text-gray-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-300">Mines</label>
+                        <input v-model.number="mines" type="number" min="1" :max="Math.floor(cols*rows*0.9)"
+                            class="w-full px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white/70 dark:bg-white/10 border-gray-300 dark:border-white/20 text-gray-900 dark:text-white">
+                    </div>
+                </div>
+                <button @click="startGame" class="btn-glow w-full py-3 text-white font-bold rounded-xl text-lg">
+                    <i class="fas fa-play mr-2"></i>Start Game
+                </button>
+            </div>
+
+            <!-- Active game -->
+            <div v-show="state != GAME_STATE.PENDING" :class="darkMode ? 'glass' : 'glass-light'" class="rounded-2xl p-6 shadow-lg">
+                <div v-if="state == GAME_STATE.OVER"
+                    class="mb-4 px-4 py-3 rounded-xl bg-red-500/20 border border-red-400/40 text-red-600 dark:text-red-300 font-semibold text-center text-lg">
+                    &#x1F4A5; Game Over! You hit a mine.
+                </div>
+                <div v-if="state == GAME_STATE.WIN"
+                    class="mb-4 px-4 py-3 rounded-xl bg-yellow-400/20 border border-yellow-400/40 text-yellow-700 dark:text-yellow-300 font-semibold text-center text-lg">
+                    &#x1F3C6; You Win! All safe cells revealed!
+                </div>
+                <div class="flex items-center justify-between mb-3 text-sm font-medium text-gray-600 dark:text-gray-400">
+                        <span><i class="fas fa-bomb mr-1 text-yellow-500"></i> Mines: {{ mines }}</span>
+                        <span :class="flagsRemaining < 0 ? 'text-red-500' : ''">
+                            <i class="fas fa-flag mr-1 text-yellow-500"></i> Flags: {{ flagCount }} / {{ mines }}
+                            <span v-if="flagsRemaining > 0" class="ml-2 text-gray-400 dark:text-gray-500">({{ flagsRemaining }} left)</span>
+                        </span>
+                        <span class="hidden sm:inline text-xs text-gray-400 dark:text-gray-500"><i class="fas fa-mouse mr-1"></i>Right-click to flag</span>
+                    </div>
+                    <div class="canvas-wrap">
+                        <canvas ref="canvas"
+                            @click="onCellClick"
+                            @contextmenu.prevent="onCellRightClick"
+                            width="500" height="300"></canvas>
+                    </div>
+                <button @click="restart" class="btn-glow w-full mt-4 py-3 text-white font-bold rounded-xl text-lg">
+                    <i class="fas fa-redo mr-2"></i>Restart
+                </button>
+            </div>
+        </div>
+    </section>
+
     <script src="/Minesweeper/site.js"></script>
 </body>
 
 </html>
+
+
