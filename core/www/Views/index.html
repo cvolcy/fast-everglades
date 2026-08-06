@@ -16,17 +16,17 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50:  '#f0f0ff',
-                            100: '#e0e0ff',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
+                            50:  '#f3f8f6',
+                            100: '#d1e8e2',
+                            400: '#d9b08c',
+                            500: '#116466',
+                            600: '#2c3531',
+                            700: '#1f2724',
                         },
-                        cyan: {
-                            300: '#67e8f9',
-                            400: '#22d3ee',
-                            500: '#06b6d4',
+                        accent: {
+                            300: '#d1e8e2',
+                            400: '#ffcb9a',
+                            500: '#d9b08c',
                         }
                     }
                 }
@@ -48,7 +48,7 @@
 
         /* ── Aurora hero background ── */
         .aurora-bg {
-            background: #0d0d1a;
+            background: #2C3531;
             position: relative;
             overflow: hidden;
         }
@@ -62,12 +62,12 @@
         }
         .aurora-bg::before {
             width: 700px; height: 700px;
-            background: radial-gradient(circle, #7c3aed, transparent 70%);
+            background: radial-gradient(circle, #116466, transparent 70%);
             top: -200px; left: -150px;
         }
         .aurora-bg::after {
             width: 600px; height: 600px;
-            background: radial-gradient(circle, #06b6d4, transparent 70%);
+            background: radial-gradient(circle, #D9B08C, transparent 70%);
             bottom: -150px; right: -100px;
             animation-delay: -6s;
         }
@@ -76,7 +76,7 @@
             to   { transform: translate(40px, 30px) scale(1.08); }
         }
         .light-hero {
-            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 40%, #cffafe 100%);
+            background: linear-gradient(135deg, #D1E8E2 0%, #FFCB9A 50%, #D9B08C 100%);
         }
 
         /* ── Glassmorphism ── */
@@ -101,8 +101,8 @@
         }
         .glass-card:hover {
             transform: translateY(-7px);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 0 32px rgba(139, 92, 246, 0.18), 0 8px 32px rgba(0,0,0,0.3);
+            border-color: rgba(17, 100, 102, 0.5);
+            box-shadow: 0 0 32px rgba(17, 100, 102, 0.2), 0 8px 32px rgba(0,0,0,0.3);
         }
         .glass-card-light {
             background: rgba(255, 255, 255, 0.6);
@@ -113,18 +113,18 @@
         }
         .glass-card-light:hover {
             transform: translateY(-7px);
-            box-shadow: 0 0 32px rgba(124, 58, 237, 0.15), 0 8px 32px rgba(0,0,0,0.08);
+            box-shadow: 0 0 32px rgba(17, 100, 102, 0.15), 0 8px 32px rgba(0,0,0,0.08);
         }
 
         /* ── Gradient text ── */
         .grad-text {
-            background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+            background: linear-gradient(135deg, #FFCB9A 0%, #D1E8E2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .grad-text-light {
-            background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+            background: linear-gradient(135deg, #116466 0%, #2C3531 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -132,23 +132,23 @@
 
         /* ── Glow button ── */
         .btn-glow {
-            background: linear-gradient(135deg, #7c3aed, #06b6d4);
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.45);
+            background: linear-gradient(135deg, #116466, #2C3531);
+            box-shadow: 0 0 20px rgba(17, 100, 102, 0.45);
             transition: box-shadow 0.3s ease, transform 0.2s ease;
         }
         .btn-glow:hover {
-            box-shadow: 0 0 38px rgba(124, 58, 237, 0.7), 0 0 18px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 0 38px rgba(17, 100, 102, 0.65), 0 0 18px rgba(217, 176, 140, 0.45);
             transform: translateY(-1px);
         }
         .btn-outline-glow {
-            border: 1.5px solid rgba(139, 92, 246, 0.6);
-            color: #a78bfa;
+            border: 1.5px solid rgba(17, 100, 102, 0.7);
+            color: #116466;
             transition: all 0.3s ease;
         }
         .btn-outline-glow:hover {
-            background: rgba(139, 92, 246, 0.12);
-            border-color: #a78bfa;
-            box-shadow: 0 0 18px rgba(139, 92, 246, 0.3);
+            background: rgba(17, 100, 102, 0.12);
+            border-color: #2C3531;
+            box-shadow: 0 0 18px rgba(17, 100, 102, 0.3);
         }
 
         /* ── Nav link underline ── */
@@ -156,14 +156,14 @@
         .nav-link::after {
             content: ''; position: absolute; bottom: -2px; left: 0;
             width: 0; height: 2px;
-            background: linear-gradient(90deg, #7c3aed, #06b6d4);
+            background: linear-gradient(90deg, #116466, #D9B08C);
             transition: width 0.3s;
         }
         .nav-link:hover::after { width: 100%; }
 
         /* ── Skill bar ── */
         .skill-bar {
-            background: linear-gradient(90deg, #7c3aed, #06b6d4);
+            background: linear-gradient(90deg, #116466, #D9B08C);
             transition: width 1.2s cubic-bezier(.4,0,.2,1);
         }
 
@@ -180,12 +180,12 @@
 
         /* ── Scrollbar ── */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0d0d1a; }
-        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 3px; }
+        ::-webkit-scrollbar-track { background: #2C3531; }
+        ::-webkit-scrollbar-thumb { background: #116466; border-radius: 3px; }
     </style>
 </head>
 
-<body id="app" class="font-sans bg-gray-50 text-gray-900 dark:bg-[#0d0d1a] dark:text-gray-100 transition-colors duration-300" v-cloak>
+<body id="app" class="font-sans bg-[#f5f8f6] text-gray-900 dark:bg-[#2C3531] dark:text-gray-100 transition-colors duration-300" v-cloak>
 
     <!-- ── NAVBAR ── -->
     <header :class="darkMode ? 'glass' : 'glass-light'" class="fixed top-0 inset-x-0 z-50 border-b border-white/30">
@@ -196,40 +196,40 @@
             </a>
             <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#projects" class="nav-link text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Projects</a>
-                <a href="#about" class="nav-link text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">About</a>
-                <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Contact</a>
+                <a href="#projects" class="nav-link text-gray-600 dark:text-gray-300 hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors">Projects</a>
+                <a href="#about" class="nav-link text-gray-600 dark:text-gray-300 hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors">About</a>
+                <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors">Contact</a>
             </nav>
             <div class="flex items-center gap-3">
                 <!-- Dark mode toggle -->
                 <button @click="toggleDark" aria-label="Toggle dark mode"
-                    :class="darkMode ? 'glass text-violet-300' : 'glass-light text-violet-700'"
+                    :class="darkMode ? 'glass text-[#D1E8E2]' : 'glass-light text-[#116466]'"
                     class="p-2 rounded-xl hover:scale-105 transition-all">
                     <i :class="darkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
                 </button>
                 <!-- Mobile menu button -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden p-2 rounded-xl" aria-label="Menu">
-                    <i :class="[mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars', darkMode ? 'text-violet-300' : 'text-violet-700']"></i>
+                    <i :class="[mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars', darkMode ? 'text-[#D1E8E2]' : 'text-[#116466]']"></i>
                 </button>
             </div>
         </div>
         <!-- Mobile Nav -->
         <div v-show="mobileMenuOpen" :class="darkMode ? 'glass' : 'glass-light'" class="md:hidden border-t border-white/20 px-4 py-4 flex flex-col gap-4 text-sm font-medium">
-            <a href="#projects" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Projects</a>
-            <a href="#about" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">About</a>
-            <a href="#contact" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">Contact</a>
+            <a href="#projects" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors">Projects</a>
+            <a href="#about" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors">About</a>
+            <a href="#contact" @click="mobileMenuOpen=false" class="text-gray-700 dark:text-gray-200 hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors">Contact</a>
         </div>
     </header>
 
     <!-- ── HERO ── -->
     <section :class="darkMode ? 'aurora-bg' : 'light-hero'" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 pb-12 overflow-hidden">
         <!-- Light mode orbs -->
-        <div v-show="!darkMode" class="orb w-96 h-96 bg-violet-200 top-[-4rem] left-[-4rem] opacity-60"></div>
-        <div v-show="!darkMode" class="orb w-80 h-80 bg-cyan-200 bottom-[-3rem] right-[-3rem] opacity-50"></div>
+        <div v-show="!darkMode" class="orb w-96 h-96 bg-[#D1E8E2] top-[-4rem] left-[-4rem] opacity-60"></div>
+        <div v-show="!darkMode" class="orb w-80 h-80 bg-[#FFCB9A] bottom-[-3rem] right-[-3rem] opacity-50"></div>
         <!-- Content card -->
         <div :class="darkMode ? 'glass' : 'glass-light'" class="relative z-10 max-w-3xl mx-auto rounded-3xl px-8 py-12 shadow-2xl">
             <img src="/Images/avatar.png" alt="Clervens Volcy"
-                class="w-28 h-28 rounded-full object-cover mx-auto mb-6 border-4 border-violet-500 shadow-[0_0_30px_rgba(124,58,237,0.5)]">
+                class="w-28 h-28 rounded-full object-cover mx-auto mb-6 border-4 border-[#116466] shadow-[0_0_30px_rgba(17,100,102,0.45)]">
             <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Senior Software Engineer</p>
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 text-gray-900 dark:text-white">
                 Hi, I'm <span :class="darkMode ? 'grad-text' : 'grad-text-light'">Clervens Volcy</span>
@@ -247,15 +247,15 @@
             </div>
             <div class="flex justify-center gap-5 mt-8 text-gray-500 dark:text-gray-400 text-xl">
                 <a href="https://www.linkedin.com/in/clervens-volcy-5522a670/" target="_blank"
-                    class="hover:text-violet-600 dark:hover:text-violet-300 transition-colors"><i class="fab fa-linkedin"></i></a>
+                    class="hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors"><i class="fab fa-linkedin"></i></a>
                 <a href="mailto:clervens.volcy@gmail.com"
-                    class="hover:text-violet-600 dark:hover:text-violet-300 transition-colors"><i class="fas fa-envelope"></i></a>
+                    class="hover:text-[#116466] dark:hover:text-[#D1E8E2] transition-colors"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </section>
 
     <!-- ── PROJECTS ── -->
-    <section id="projects" class="py-20 px-4 bg-white dark:bg-[#0f0f1e] relative overflow-hidden">
+    <section id="projects" class="py-20 px-4 bg-white dark:bg-[#22302d] relative overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
                 <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Portfolio</p>
@@ -271,7 +271,7 @@
                         'tag-btn px-4 py-1.5 rounded-full text-sm font-medium border transition-all',
                         activeFilter === tag
                             ? 'btn-glow text-white border-transparent'
-                            : (darkMode ? 'glass border-white/10 text-gray-300 hover:text-violet-300' : 'glass-light border-white/40 text-gray-600 hover:text-violet-600') + ' hover:border-violet-400'
+                            : (darkMode ? 'glass border-white/10 text-gray-300 hover:text-[#D1E8E2]' : 'glass-light border-white/40 text-gray-600 hover:text-[#116466]') + ' hover:border-[#D9B08C]'
                     ]">
                     {{ tag }}
                 </button>
@@ -300,7 +300,7 @@
                         <h3 class="font-bold text-base mb-2 text-gray-900 dark:text-gray-100">{{ project.title }}</h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400 flex-1 leading-relaxed">{{ project.description }}</p>
                         <a :href="project.link"
-                            class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-violet-600 dark:text-violet-300 hover:gap-3 transition-all">
+                            class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#116466] dark:text-[#D1E8E2] hover:gap-3 transition-all">
                             View Demo <i class="fas fa-arrow-right text-xs"></i>
                         </a>
                     </div>
@@ -312,7 +312,7 @@
     </section>
 
     <!-- ── ABOUT ── -->
-    <section id="about" class="py-20 px-4 bg-gray-50 dark:bg-[#0d0d1a] relative overflow-hidden">
+    <section id="about" class="py-20 px-4 bg-[#f5f8f6] dark:bg-[#2C3531] relative overflow-hidden">
         <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
                 <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">About Me</p>
@@ -327,7 +327,7 @@
                     <div v-for="skill in skills" :key="skill.name">
                         <div class="flex justify-between text-sm font-medium mb-1">
                             <span class="text-gray-700 dark:text-gray-300">{{ skill.name }}</span>
-                            <span class="text-violet-600 dark:text-violet-300">{{ skill.level }}%</span>
+                            <span class="text-[#116466] dark:text-[#D1E8E2]">{{ skill.level }}%</span>
                         </div>
                         <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                             <div class="h-full rounded-full skill-bar" :style="{ width: skill.level + '%' }"></div>
@@ -338,7 +338,7 @@
             <div class="flex justify-center">
                 <div class="relative">
                     <div :class="darkMode ? 'glass' : 'glass-light'" class="absolute -inset-4 rounded-3xl rotate-3"></div>
-                    <div class="absolute -inset-6 rounded-3xl -rotate-2" style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(6,182,212,0.12));filter:blur(2px)"></div>
+                    <div class="absolute -inset-6 rounded-3xl -rotate-2" style="background:linear-gradient(135deg,rgba(17,100,102,0.18),rgba(217,176,140,0.16));filter:blur(2px)"></div>
                     <img src="/Images/avatar.png" alt="Clervens Volcy"
                         class="relative w-72 h-72 rounded-2xl object-cover shadow-2xl">
                 </div>
@@ -347,7 +347,7 @@
     </section>
 
     <!-- ── CONTACT ── -->
-    <section id="contact" class="py-20 px-4 bg-white dark:bg-[#0f0f1e] relative overflow-hidden">
+    <section id="contact" class="py-20 px-4 bg-white dark:bg-[#22302d] relative overflow-hidden">
         <div class="max-w-2xl mx-auto text-center">
             <p :class="darkMode ? 'grad-text' : 'grad-text-light'" class="font-semibold text-sm uppercase tracking-widest mb-2">Contact</p>
             <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Let's work together.</h2>
@@ -366,7 +366,7 @@
     </section>
 
     <!-- ── FOOTER ── -->
-    <footer class="py-8 px-4 text-center text-sm text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-[#0a0a14] border-t border-gray-200 dark:border-white/10">
+    <footer class="py-8 px-4 text-center text-sm text-gray-500 dark:text-gray-400 bg-[#edf5f2] dark:bg-[#1b2522] border-t border-gray-200 dark:border-white/10">
         <p>© <span id="year"></span> Clervens Volcy — Built with Vue.js &amp; Tailwind CSS</p>
     </footer>
 
