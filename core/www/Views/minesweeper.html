@@ -5,7 +5,7 @@
     <title>Fast Everglades | Minesweeper</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Fast Everglades, Minesweeper — Vue.js &amp; Canvas">
+    <meta name="description" content="Fast Everglades, Minesweeper ~ Vue.js &amp; Canvas">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -235,7 +235,7 @@
                 <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
                     A minesweeper clone built using <strong class="text-yellow-600 dark:text-yellow-400">Vue.js</strong> and
                     <strong class="text-yellow-600 dark:text-yellow-400">HTML5 Canvas</strong>.
-                    Configure grid size and mine count, then click cells to reveal them. Avoid the mines — or face the consequences!
+                    Configure grid size and mine count, then click cells to reveal them. Avoid the mines ~ or face the consequences!
                 </p>
                 <div class="mt-6 flex flex-wrap gap-3">
                     <span class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700">Vue.js</span>
@@ -270,11 +270,11 @@
                     </div>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Represents a single square on the grid. Responsible for its own rendering via the Canvas 2D API.</p>
                     <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">x, y, w</span> — position &amp; size in canvas pixels</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">hasAMine</span> — whether the cell contains a mine</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">revealed</span> — has the player uncovered it</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">flagged</span> — player-placed flag marker</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">neighborsCount</span> — adjacent mine count (cached)</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">x, y, w</span> ~ position &amp; size in canvas pixels</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">hasAMine</span> ~ whether the cell contains a mine</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">revealed</span> ~ has the player uncovered it</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">flagged</span> ~ player-placed flag marker</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">neighborsCount</span> ~ adjacent mine count (cached)</li>
                     </ul>
                     <div class="mt-4 flex flex-wrap gap-2">
                         <span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">show(darkMode)</span>
@@ -291,8 +291,8 @@
                     </div>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A 2D array <span class="font-mono text-yellow-600 dark:text-yellow-400">Cell[cols][rows]</span> managed by the Vue instance. Mines are seeded randomly then each cell pre-computes its neighbor count.</p>
                     <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">cols × rows</span> — configurable 5–50 each axis</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">mines</span> — up to 90 % of total cells</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">cols × rows</span> ~ configurable 5–50 each axis</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">mines</span> ~ up to 90 % of total cells</li>
                         <li>Flood-fill reveal for zero-neighbor cells (recursive)</li>
                         <li>Win detected when all safe cells are revealed</li>
                     </ul>
@@ -305,9 +305,9 @@
                     </div>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Acts as the controller. Owns reactive state and wires DOM events to game logic.</p>
                     <ul class="text-sm space-y-1 text-gray-600 dark:text-gray-400">
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">state</span> — PENDING / STARTED / WIN / OVER</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">flagCount</span> / <span class="text-yellow-600 dark:text-yellow-400 font-mono">flagsRemaining</span> — computed</li>
-                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">darkMode</span> — persisted via localStorage</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">state</span> ~ PENDING / STARTED / WIN / OVER</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">flagCount</span> / <span class="text-yellow-600 dark:text-yellow-400 font-mono">flagsRemaining</span> ~ computed</li>
+                        <li><span class="text-yellow-600 dark:text-yellow-400 font-mono">darkMode</span> ~ persisted via localStorage</li>
                         <li>Triggers canvas redraw on every state change</li>
                     </ul>
                 </div>
@@ -396,7 +396,7 @@
                     </div>
                     <div class="flex flex-col items-center gap-1">
                         <span class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-400 border border-slate-200 dark:border-slate-700">&#x20;</span>
-                        <span class="text-xs text-gray-400">0 — safe zone</span>
+                        <span class="text-xs text-gray-400">0 ~ safe zone</span>
                     </div>
                 </div>
             </div>
@@ -408,7 +408,7 @@
                 </h3>
                 <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                     Reveal <strong class="text-yellow-600 dark:text-yellow-400">every safe cell</strong> on the board without detonating a mine.
-                    You win the moment all non-mine cells are uncovered — flagging every mine is not required, but it helps you track them.
+                    You win the moment all non-mine cells are uncovered ~ flagging every mine is not required, but it helps you track them.
                 </p>
                 <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                     <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">

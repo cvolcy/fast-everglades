@@ -2,10 +2,10 @@
 <html lang="en" id="html-root">
 
 <head>
-    <title>Clervens Volcy — Senior Software Engineer</title>
+    <title>Clervens Volcy ~ Senior Software Engineer</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Senior Software Engineer portfolio — Clervens Volcy, Montréal">
+    <meta name="description" content="Senior Software Engineer portfolio ~ Clervens Volcy, Montréal">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -33,20 +33,15 @@
             }
         }
     </script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- Vue 3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <style>
-        /* ── Base ── */
         [v-cloak] { display: none; }
         html { scroll-behavior: smooth; }
 
-        /* ── Aurora hero background ── */
         .aurora-bg {
             background: #2C3531;
             position: relative;
@@ -79,7 +74,6 @@
             background: linear-gradient(135deg, #D1E8E2 0%, #FFCB9A 50%, #D9B08C 100%);
         }
 
-        /* ── Glassmorphism ── */
         .glass {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(18px) saturate(160%);
@@ -116,7 +110,6 @@
             box-shadow: 0 0 32px rgba(17, 100, 102, 0.15), 0 8px 32px rgba(0,0,0,0.08);
         }
 
-        /* ── Gradient text ── */
         .grad-text {
             background: linear-gradient(135deg, #FFCB9A 0%, #D1E8E2 100%);
             -webkit-background-clip: text;
@@ -130,7 +123,6 @@
             background-clip: text;
         }
 
-        /* ── Glow button ── */
         .btn-glow {
             background: linear-gradient(135deg, #116466, #2C3531);
             box-shadow: 0 0 20px rgba(17, 100, 102, 0.45);
@@ -151,7 +143,6 @@
             box-shadow: 0 0 18px rgba(17, 100, 102, 0.3);
         }
 
-        /* ── Nav link underline ── */
         .nav-link { position: relative; }
         .nav-link::after {
             content: ''; position: absolute; bottom: -2px; left: 0;
@@ -161,16 +152,13 @@
         }
         .nav-link:hover::after { width: 100%; }
 
-        /* ── Skill bar ── */
         .skill-bar {
             background: linear-gradient(90deg, #116466, #D9B08C);
             transition: width 1.2s cubic-bezier(.4,0,.2,1);
         }
 
-        /* ── Tag buttons ── */
         .tag-btn { transition: all 0.2s ease; }
 
-        /* ── Orb decorations ── */
         .orb {
             position: absolute;
             border-radius: 50%;
@@ -178,7 +166,6 @@
             pointer-events: none;
         }
 
-        /* ── Scrollbar ── */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #2C3531; }
         ::-webkit-scrollbar-thumb { background: #116466; border-radius: 3px; }
@@ -235,7 +222,7 @@
                 Hi, I'm <span :class="darkMode ? 'grad-text' : 'grad-text-light'">Clervens Volcy</span>
             </h1>
             <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto mb-8">
-                Building intelligent, cloud-native web applications — Montréal, Canada.
+                Building intelligent, cloud-native web applications ~ Montréal, Canada.
             </p>
             <div class="flex flex-wrap justify-center gap-3">
                 <a href="#projects" class="btn-glow px-6 py-3 text-white font-semibold rounded-full">
@@ -367,7 +354,7 @@
 
     <!-- ── FOOTER ── -->
     <footer class="py-8 px-4 text-center text-sm text-gray-500 dark:text-gray-400 bg-[#edf5f2] dark:bg-[#1b2522] border-t border-gray-200 dark:border-white/10">
-        <p>© <span id="year"></span> Clervens Volcy — Built with Vue.js &amp; Tailwind CSS</p>
+        <p>© <span id="year"></span> Built with ❤️ by Clervens Volcy</p>
     </footer>
 
     <script>
